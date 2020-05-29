@@ -1,4 +1,4 @@
-/static/<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head> 
     <meta charset="utf-8">
@@ -150,7 +150,7 @@
                         <input id="inlineFormInput" type="text" placeholder="Username" class="mr-sm-3 form-control">
                       </div>
                       <div class="form-group">
-                        <input type="button" id="q_order" value="Query" class="btn btn-primary">
+                        <input type="button" onclick="q_order_t.style.display='block'" value="Query" class="btn btn-primary">
                       </div>
                     </form>
                   </div>
@@ -169,14 +169,31 @@
                           <th style="text-align: center">Status</th>
                           <th style="text-align: center">Train ID</th>
                           <th style="text-align: center">Departure station</th>
+                          <th style="text-align: center">Departure date</th>
                           <th style="text-align: center">Departure time</th>
+                          <th style="text-align: center">Arrival date</th>
                           <th style="text-align: center">Arrival time</th>
                           <th style="text-align: center">Arrival station</th>
                           <th style="text-align: center">Price</th>
                           <th style="text-align: center">Num</th>
                         </tr>
                       </thead>
-                      <tbody id="t_body">
+                      <tbody>
+                        {% for order in orders %}
+                        <tr>
+                          <th></th>
+                          <td style="text-align: center">{{order.status}}</td>
+                          <td style="text-align: center">{{order.id_}}</td>
+                          <td style="text-align: center">{{order.from_}}</td>
+                          <td style="text-align: center">{{order.from_date}}</td>
+                          <td style="text-align: center">{{order.from_time}}</td>
+                          <td style="text-align: center">{{order.to}}</td>
+                          <td style="text-align: center">{{order.to_date}}</td>
+                          <td style="text-align: center">{{order.to_time}}</td>
+                          <td style="text-align: center">{{order.price}}</td>
+                          <td style="text-align: center">{{order.num}}</td>
+                        </tr>
+                        {% endfor %}
                       </tbody>
                     </table>
                   </div>
@@ -202,6 +219,5 @@
     <script src="/static/vendor/chart.js/Chart.min.js"></script>
     <script src="/static/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="/static/js/front.js"></script>
-    <script src="/static/js/q_order.js"></script>
   </body>
 </html>

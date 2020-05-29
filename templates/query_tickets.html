@@ -1,4 +1,4 @@
-/static/<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head> 
     <meta charset="utf-8">
@@ -134,7 +134,7 @@
                           <div class="line"></div>
                           <div class="form-group row">
                             <div class="col-sm-11 ml-auto" style="padding-left: 50px;">
-                              <button id="q_tickets" type="button" class="btn btn-primary">Query</button>
+                              <button onclick="q_tickets_t.style.display='block'" type="button" class="btn btn-primary">Query</button>
                             </div>
                           </div>
                         </div>
@@ -203,14 +203,30 @@
                           <th>#</th>
                           <th style="text-align: center">Train ID</th>
                           <th style="text-align: center">Departure station</th>
+                          <th style="text-align: center">Departure date</th>
                           <th style="text-align: center">Departure time</th>
+                          <th style="text-align: center">Arrival date</th>
                           <th style="text-align: center">Arrival time</th>
                           <th style="text-align: center">Arrival station</th>
                           <th style="text-align: center">Price</th>
                           <th style="text-align: center">Seat</th>
                         </tr>
                       </thead>
-                      <tbody id="t_body">
+                      <tbody>
+                        {% for ticket_ in tickets %}
+                        <tr>
+                          <th>{{cnt_ticket}}</th>
+                          <td style="text-align: center">{{ticket_.id_}}</td>
+                          <td style="text-align: center">{{ticket_.from_}}</td>
+                          <td style="text-align: center">{{ticket_.from_date}}</td>
+                          <td style="text-align: center">{{ticket_.from_time}}</td>
+                          <td style="text-align: center">{{ticket_.to}}</td>
+                          <td style="text-align: center">{{ticket_.to_date}}</td>
+                          <td style="text-align: center">{{ticket_.to_time}}</td>
+                          <td style="text-align: center">{{ticket_.price}}</td>
+                          <td style="text-align: center">{{ticket_.seats}}</td>
+                        </tr>
+                        {% endfor %}
                       </tbody>
                     </table>
                   </div>
@@ -236,6 +252,5 @@
     <script src="/static/vendor/chart.js/Chart.min.js"></script>
     <script src="/static/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="/static/js/front.js"></script>
-    <script src="/static/js/q_tickets.js"></script>
   </body>
 </html>

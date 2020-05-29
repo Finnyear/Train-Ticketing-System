@@ -106,7 +106,7 @@
                         <input id="inlineFormInputGroup" type="text" placeholder="Date" class="mr-sm-3 form-control form-control">
                       </div>
                       <div class="form-group">
-                        <input type="button" id="q_train" value="Query" class="btn btn-primary">
+                        <input type="button" onclick="q_train_t.style.display='block'" value="Query" class="btn btn-primary">
                       </div>
                     </form>
                   </div>
@@ -117,20 +117,34 @@
             <div class="row" id="q_train_t" style="display: none;">
               <div class="col-lg-12">
                 <div class="block">
-                  <div class="title"><strong>Train <i><span style="font-size: 20px;"></span></i> ( Type : <span style="font-size: 20px; font-weight: 2px"></span> ) </strong></div>
+                  <div class="title"><strong>Train <i><span style="font-size: 20px;">{{train_id}}</span></i> ( Type : <span style="font-size: 20px; font-weight: 2px">{{train_type}}</span> ) </strong></div>
                   <div class="table-responsive"> 
                     <table class="table table-striped table-hover">
                       <thead>
                         <tr>
                           <th>#</th>
                           <th style="text-align: center">Station name</th>
+                          <th style="text-align: center">Arrival date</th>
                           <th style="text-align: center">Arrival time</th>
+                          <th style="text-align: center">Departure date</th>
                           <th style="text-align: center">Departure time</th>
                           <th style="text-align: center">Price</th>
                           <th style="text-align: center">Remaining tickets</th>
                         </tr>
                       </thead>
-                      <tbody id="t_body">
+                      <tbody>
+                        {% for train in trains %}
+                        <tr>
+                          <th></th>
+                          <td style="text-align: center">{{train.station}}</td>
+                          <td style="text-align: center">{{train.to_date}}</td>
+                          <td style="text-align: center">{{train.to_time}}</td>
+                          <td style="text-align: center">{{train.from_date}}</td>
+                          <td style="text-align: center">{{train.from_time}}</td>
+                          <td style="text-align: center">{{train.price}}</td>
+                          <td style="text-align: center">{{train.remain}}</td>
+                        </tr>
+                        {% endfor %}
                       </tbody>
                     </table>
                   </div>
@@ -156,6 +170,5 @@
     <script src="/static/vendor/chart.js/Chart.min.js"></script>
     <script src="/static/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="/static/js/front.js"></script>
-    <script src="/static/js/q_train.js"></script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from class_ import *
 
 app = Flask(__name__)
 
@@ -45,16 +46,40 @@ def register():
 
 @app.route('/query_order.html')
 def query_order():
-	return render_template('query_order.html')
+	orders_str = 'IS PENDING|CHT|Shanghai|12-21 |13:23|12-21 |13:23|Beijing|100|50\nIS PENDING|CHT|Shanghai|12-21 |13:23|12-21 |13:23|Beijing|100|50'
+	orders = []
+	for order_str in orders_str.split('\n'):
+		bought_ticket = Order_()
+		[bought_ticket.status, bought_ticket.id_, bought_ticket.from_, bought_ticket.from_date, bought_ticket.from_time, bought_ticket.to, bought_ticket.to_date, bought_ticket.to_time, bought_ticket.price, bought_ticket.num] = order_str.split('|')
+		orders.append(bought_ticket)
+	return render_template('query_order.html', orders=orders)
 
 @app.route('/query_tickets.html')
 def query_tickets():
-	return render_template('query_tickets.html')
+	tickets_str = 'CHT|Shanghai|12-21 |13:23|12-21 |13:23|Beijing|100|30\nCHT|Shanghai|12-21 |13:23|12-21 |13:23|Beijing|100|50'
+	tickets = []
+	cnt_ticket = 1
+	for ticket_str in tickets_str.split('\n'):
+		ticket_ = Ticket_()
+		[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.to, ticket_.to_date, ticket_.to_time, ticket_.price, ticket_.seats] = ticket_str.split('|')
+		tickets.append(ticket_)
+	return render_template('query_tickets.html', tickets=tickets)
 
 @app.route('/query_train.html')
 def query_train():
-	return render_template('query_train.html')
+	trains = []
+	train_id = 'CHT'
+	train_type = 'G'
+	trains_str = "Shanghai|xx-xx|xx:xx|12-21 |13:23| 100|50\nNanjing|12-22| 14:23|12-21 |17:53|100|50\nBeijing|12-25 |1:41|xx-xx|xx:xx |100|x"
+	for train_str in trains_str.split('\n'):
+		train_ = Train_()
+		[train_.station, train_.to_date, train_.to_time, train_.from_date, train_.from_time, train_.price, train_.remain] = train_str.split('|')
+		trains.append(train_)
+	return render_template('query_train.html', trains=trains, train_id=train_id, train_type=train_type)
 
 @app.route('/query_user.html')
 def query_user():
-	return render_template('query_user.html')
+	user_str = 'CHT|cht|cht@163.com|5'
+	user_ = User_()
+	[user_.u_name, user_.name, user_.mail, user_.p_] = user_str.split('|')
+	return render_template('query_user.html', user_=user_)
