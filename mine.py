@@ -60,3 +60,15 @@ def id_check_valid(input_id):
         else:
             return '!'
     return final_id
+
+def date_check_valid(input_date):
+    final_date = ''
+    jd_line = 0
+    for i in input_date:
+        if i == ' ':
+            continue
+        if (i <= '9' and i >= '0') or i == '-':
+            final_date += i
+        else:
+            return '!'
+    return final_date

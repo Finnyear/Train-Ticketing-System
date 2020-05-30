@@ -84,6 +84,9 @@
       <!-- Sidebar Navigation end-->
       <div class="page-content">
         <!-- Breadcrumb-->
+        {% for message in get_flashed_messages() %}
+          <div style="position: relative;padding: 7px 10px;margin: 20px ;color: white;font-size: 15px;background-color: #DB6574; border-radius: 5px">{{ message }}</div>
+        {% endfor %}
         <div class="container-fluid">
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -96,10 +99,9 @@
               <div class="col-lg-12">                           
                 <div class="block">
                   <div class="block-body">
-                    <form class="form-inline">
+                    <form method="post" class="form-inline">
                       <div class="form-group">
-                        <label for="inlineFormInputGroup" class="sr-only">Username</label>
-                        <input id="inlineFormInputGroup" type="text" placeholder="Train ID" class="mr-sm-3 form-control form-control">
+                        <input required="required" name="train_id" id="inlineFormInputGroup" type="text" placeholder="Train ID" class="mr-sm-3 form-control form-control">
                       </div>
                       <div class="form-group">
                         <input type="submit" value="Delete" class="btn btn-primary">
