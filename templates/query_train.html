@@ -135,7 +135,7 @@
                       <tbody>
                         {% for train in trains %}
                         <tr>
-                          <th></th>
+                          <th>{{trains.index(train)+1}}</th>
                           <td style="text-align: center">{{train.station}}</td>
                           <td style="text-align: center">{{train.to_date}}</td>
                           <td style="text-align: center">{{train.to_time}}</td>

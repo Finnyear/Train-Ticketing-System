@@ -215,7 +215,7 @@
                       <tbody>
                         {% for ticket_ in tickets %}
                         <tr>
-                          <th>{{cnt_ticket}}</th>
+                          <th>{{tickets.index(ticket_)+1}}</th>
                           <td style="text-align: center">{{ticket_.id_}}</td>
                           <td style="text-align: center">{{ticket_.from_}}</td>
                           <td style="text-align: center">{{ticket_.from_date}}</td>

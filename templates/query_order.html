@@ -181,7 +181,7 @@
                       <tbody>
                         {% for order in orders %}
                         <tr>
-                          <th></th>
+                          <th>{{orders.index(order)+1}}</th>
                           <td style="text-align: center">{{order.status}}</td>
                           <td style="text-align: center">{{order.id_}}</td>
                           <td style="text-align: center">{{order.from_}}</td>

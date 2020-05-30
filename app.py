@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-from class_ import *
+from flask import Flask, render_template, request, redirect, flash, url_for
+from mine import *
 
 app = Flask(__name__)
 
@@ -28,8 +28,27 @@ def clear():
 def delete():
 	return render_template('delete.html')
 
-@app.route('/release.html')
+@app.route('/release.html', methods=['GET', 'POST'])
 def release():
+	if request.method == 'POST':
+		train_id = request.form.get('train_id')
+		train_id_ = id_check_valid(train_id)
+		if train_id_ == '!':
+			flash('Invalid input: "'+ train_id +'". (A valid train ID should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
+			return redirect(url_for('release'))
+		#将train_id_送到后台并接受返回信息
+		if train_id_ == 'cht':
+			train_id_str = '0'
+		else:
+			train_id_str = '-1'
+		###############################	
+		if train_id_str == '-1':
+			flash('Fail. Maybe go to check the train info first.')
+			return redirect(url_for('release'))
+
+		flash('Success.')
+		return redirect(url_for('release'))
+
 	return render_template('release.html')
 
 @app.route('/refund.html')
@@ -83,3 +102,5 @@ def query_user():
 	user_ = User_()
 	[user_.u_name, user_.name, user_.mail, user_.p_] = user_str.split('|')
 	return render_template('query_user.html', user_=user_)
+
+app.secret_key = 'no secret'
