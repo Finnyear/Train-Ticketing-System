@@ -49,8 +49,8 @@
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
           <div class="title">
-            <h1 class="h5">User1#1723</h1>
-            <p>Unknown</p>
+            <h1 class="h5">{}</h1>
+            <p>Priviledge:{}</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus-->
@@ -84,6 +84,9 @@
       <!-- Sidebar Navigation end-->
       <div class="page-content">
         <!-- Breadcrumb-->
+        {% for message in get_flashed_messages() %}
+          <div style="position: relative;padding: 7px 10px;margin: 20px ;color: white;font-size: 15px;background-color: #DB6574; border-radius: 5px">{{ message }}</div>
+        {% endfor %}
         <div class="container-fluid">
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -97,29 +100,29 @@
               <div class="col-lg-12">
                 <div class="block">
                   <div class="block-body">
-                    <form class="form-horizontal">
+                    <form method="post" class="form-horizontal">
                       <div class="line"> </div>
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="form-group-material">
-                            <input id="register-username" type="text" name="registerUsername" required class="input-material">
-                            <label for="register-username" class="label-material">Usename</label>
+                            <input value="{{username_v}}" autocomplete="off" type="text" name="username" required class="input-material">
+                            <label for="register-username" class="label-material" style="font-size: 20px">Usename</label>
                           </div>
                           <div class="form-group-material">
-                            <input id="register-password" type="password" name="registerPassword" required class="input-material">
-                            <label for="register-password" class="label-material">Password        </label>
+                            <input id="password" value="{{password_v}}" autocomplete="off" type="password" name="password" required class="input-material">
+                            <label for="register-password" class="label-material" style="font-size: 20px">Password        </label>
                           </div>
                           <div class="form-group-material">
-                            <input id="register-name" type="text" name="registerName" required class="input-material">
-                            <label for="register-name" class="label-material">Name</label>
+                            <input value="{{name_v}}" type="text" autocomplete="off" name="name" required class="input-material" id="add_user_name">
+                            <label for="register-name" class="label-material" style="font-size: 20px">Name</label>
                           </div>
                           <div class="form-group-material">
-                            <input id="register-email" type="email" name="registerEmail" required class="input-material">
-                            <label for="register-email" class="label-material">Email Address      </label>
+                            <input id="email" value="{{email_v}}" autocomplete="off" type="email" name="email" required class="input-material">
+                            <label for="register-email" class="label-material" style="font-size: 20px">Email Address      </label>
                           </div>
                           <div class="form-group-material">
-                            <input id="register-userpriviledge" type="text" name="registerUser Priviledge" required class="input-material">
-                            <label for="register-userpriviledge" class="label-material">User Priviledge</label>
+                            <input value="{{priviledge_v}}" autocomplete="off" min=1 max=10 type="number" name="priviledge" required class="input-material">
+                            <label for="register-userpriviledge" class="label-material" style="font-size: 20px">User Priviledge</label>
                           </div>
                         </div>
                       </div>
@@ -140,7 +143,7 @@
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
               <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-              <p class="no-margin-bottom">Copyright &copy;</p>
+              <p class="no-margin-bottom">ACM 2019</p>
             </div>
           </div>
         </footer>
@@ -154,5 +157,25 @@
     <script src="/static/vendor/chart.js/Chart.min.js"></script>
     <script src="/static/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="/static/js/front.js"></script>
+    <script type="text/javascript">
+      var password_txt = document.getElementById('password');
+      var add_user_name_txt = document.getElementById('add_user_name');
+      var email_txt = document.getElementById('email');
+      email_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==32) {return false;}
+          else{return true;}
+      }
+      add_user_name_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==229||oEvent.keyCode==8||oEvent.keyCode==37||oEvent.keyCode==39) {return true;}
+          else{return false;}
+      }
+      password_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==32) {return false;}
+          else{return true;}
+      }
+    </script>
   </body>
 </html>

@@ -59,16 +59,46 @@ def id_check_valid(input_id):
             final_id += i
         else:
             return '!'
+    if len(final_id) > 20:
+        return '!'
     return final_id
 
-def date_check_valid(input_date):
-    final_date = ''
-    jd_line = 0
-    for i in input_date:
-        if i == ' ':
-            continue
-        if (i <= '9' and i >= '0') or i == '-':
-            final_date += i
-        else:
+def password_check_valid(input_password):
+    if len(input_password) > 30 or len(input_password) < 6:
+        return '!'
+    for i in input_password:
+        if not((i <= '9' and i >= '0') or (i <= 'Z' and i >= 'A') or (i <= 'z' and i >= 'a') or i == '_'):
             return '!'
-    return final_date
+    return input_password
+
+def name_check_valid(input_name):
+    if len(input_name) > 5 or len(input_name) < 2:
+        return '!'
+    return input_name
+
+def check_num(input, x, y):
+    if x == 0:
+        return 1
+    inputs = input.split('|')
+    if len(inputs) != x:
+        return 0
+    for i in inputs:
+        if int(i) > y:
+            return 0
+    return 1
+
+def check_station_name(input, x):
+    inputs = input.split('|')
+    if len(inputs) != x:
+        return 0
+    for i in inputs:
+        if len(i) > 10:
+            return 0
+    return 1
+
+def check_date(x, y):
+    if x == 6 and 0<y<31:
+        return 1
+    if (x == 7 or x == 8) and 0 < y <= 31:
+        return 1
+    return 0 

@@ -49,8 +49,8 @@
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
           <div class="title">
-            <h1 class="h5">User1#1723</h1>
-            <p>Unknown</p>
+            <h1 class="h5">{}</h1>
+            <p>Priviledge:{}</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus-->
@@ -84,6 +84,9 @@
       <!-- Sidebar Navigation end-->
       <div class="page-content">
         <!-- Breadcrumb-->
+        {% for message in get_flashed_messages() %}
+          <div style="position: relative;padding: 7px 10px;margin: 20px ;color: white;font-size: 15px;background-color: #DB6574; border-radius: 5px">{{ message }}</div>
+        {% endfor %}
         <div class="container-fluid">
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -97,99 +100,99 @@
               <div class="col-lg-12">
                 <div class="block">
                   <div class="block-body">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="post">
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">Train ID</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control"><small class="help-block-none">The identification of a train. A valid train ID should be a string with an initial letter and made up of letter(s), number(s) or underline(s).</small>
+                          <input type="text"  required="required" name="train_id" value="{{train_id_v}}" id="id" class="form-control"><small class="help-block-none">车次的唯一标识符，由字母开头，字母、数字和下划线组成的字符串，长度不超过20。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">Train type</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control"><small class="help-block-none">Type of the train. A capital letter.</small>
+                          <input type="text"  required="required" name="train_type" value="{{train_type_v}}" id="type" class="form-control"><small class="help-block-none">车次种类，用一个大写字母表示。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">Seats number</label>
+                        <label class="col-sm-2 form-control-label">座位数</label>
                         <div class="col-sm-10">
-                          <input type="number" min="1" max="100000" class="form-control"><small class="help-block-none">The number of seats in the train. An integer lies in [1, 100000].</small>
+                          <input type="number"  required="required" name="seat_num" value="{{seat_num_v}}" min="1" max="100000" class="form-control"><small class="help-block-none">该车次的座位数，为不超过100000的整数。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">Stations number</label>
+                        <label class="col-sm-2 form-control-label">站数</label>
                         <div class="col-sm-10">
-                          <input type="number" min="2" max="100" class="form-control"><small class="help-block-none">The number of stations the train will go via(including the departure staion and the destination). An integer lies in [2, 100].</small>
+                          <input type="number"  required="required" name="station_num" value="{{station_num_v}}" min="2" max="100" class="form-control"><small class="help-block-none">车次经过的车站数量（包括首发站与终点站），为大于1且不超过100的整数。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">Stations name</label>
+                        <label class="col-sm-2 form-control-label">站名</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control"><small class="help-block-none">Names of all the stations counted above. Each name should be separated with '|'.</small>
+                          <input type="text"  required="required" name="station_name" value="{{station_name_v}}" id="station_name" class="form-control"><small class="help-block-none">输入该车次经过的所有站名（包括首发站与终点站），每个站名由不超过十个汉字组成，站名之间用符号“|”隔开。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">Prices</label>
+                        <label class="col-sm-2 form-control-label">票价</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="price"><small class="help-block-none">Prices of journey between each two neighbouring stations. A list of positive integer lies in [1, 100000], separated with '|'(eg. 45 | 21 | 7).</small>
+                          <input type="text"  required="required" name="price" value="{{price_v}}" class="form-control" id="price"><small class="help-block-none">输入每相邻两站之间的票价，用符号“|”隔开。每相邻两战的票价为不超过100000的整数。(eg. 45 | 21 | 7).</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">Start time</label>
+                        <label class="col-sm-2 form-control-label">发车时间</label>
                         <div class="col-sm-3">
-                          <input class="form-control" type="number" min="0" max="23" >
+                          <input class="form-control"  required="required" name="hour" value="{{hour_v}}" type="number" min="0" max="23" >
                         </div>
                         <div>:</div>
                         <div class="col-sm-3">
-                          <input type="number" min="0" max="59" class="form-control">
+                          <input type="number"  required="required" name="minute" value="{{minute_v}}" min="0" max="59" class="form-control">
                         </div>
-                        <small class="help-block-none" style="margin-left: 17.6%; padding:5px">The departure time. (eg. 19 : 7, 0 : 14)</small>
+                        <small class="help-block-none" style="margin-left: 17.6%; padding:5px">在售卖时间内，该车次每日的发车时间。</small>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">Travel time</label>
+                        <label class="col-sm-2 form-control-label">行车时间</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control"><small class="help-block-none">Time of journey between each two neighbouring stations. A list of positive integer lies in [1, 10000], separated with '|'.</small>
+                          <input type="text"  required="required" name="travel_time" value="{{travel_time_v}}" id="travel_time" class="form-control"><small class="help-block-none">每相邻两站之间行车所用时间（单位为分钟），每一项是一个不超过10000的整数，用符号“|”隔开。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">Stopover time</label>
+                        <label class="col-sm-2 form-control-label">经停时间</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control"><small class="help-block-none">Stopover time of each station. A list of positive integer lies in [1, 10000], separated with '|'.</small>
+                          <input type="text"  required="required" name="stop_over_time" value="{{stop_over_time_v}}" id="stop_over" class="form-control"><small class="help-block-none">除始发站和终点站之外，列车在每一站停留的时间（单位为分钟），每一项是一个不超过10000的整数，用符号“|”隔开。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
-                        <label class="col-sm-2 form-control-label">Sale date</label>
+                        <label class="col-sm-2 form-control-label">售卖时间</label>
                         <div class="col-sm-2">
-                          <input type="number" min="1" max="12" class="form-control">
+                          <input type="number"  required="required" name="sale_month1" value="{{sale_month1_v}}" min="6" max="8" class="form-control">
                         </div>
                         <div>-</div>
                         <div class="col-sm-2">
-                          <input type="number" min="1" max="31" class="form-control">
+                          <input type="number" required="required" name="sale_date1"  value="{{sale_date1_v}}" min="1" max="31" class="form-control">
                         </div>
-                        <div>to</div>
+                        <div>至</div>
                         <div class="col-sm-2">
-                          <input type="number" min="1" max="12" class="form-control">
+                          <input type="number"  required="required" name="sale_month2" value="{{sale_month2_v}}" min="6" max="8" class="form-control">
                         </div>
                         <div>-</div>
                         <div class="col-sm-2">
-                          <input type="number" min="1" max="31" class="form-control">
+                          <input type="number"  required="required" name="sale_date2" value="{{sale_date2_v}}" min="1" max="31" class="form-control">
                         </div>
-                        <small class="help-block-none" style="margin-left: 17.6%; padding:5px">Between which dates is the train service available to the customers. (eg. 5-20 to 6-12)</small>
+                        <small class="help-block-none" style="margin-left: 17.6%; padding:5px">车次的售卖时间区间（闭区间），在该区间内，每天都有相同的此车次。日期应为2020年6月至8月的某一天 (eg. 6-20 至 7-12)</small>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <div class="col-sm-10 ml-auto">
-                          <button type="submit" class="btn btn-primary">Add</button>
+                          <input type="submit" class="btn btn-primary" value="Add">
                         </div>
                       </div>
                     </form>
@@ -203,7 +206,7 @@
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
               <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-              <p class="no-margin-bottom">Copyright &copy;</p>
+              <p class="no-margin-bottom">ACM 2019</p>
             </div>
           </div>
         </footer>
@@ -212,11 +215,40 @@
     <!-- JavaScript files-->
     <script type="text/javascript">
       var price_txt = document.getElementById('price');
+      var type_txt = document.getElementById('type');
+      var id_txt = document.getElementById('id');
+      var stop_over_txt = document.getElementById('stop_over');
+      var travel_time_txt = document.getElementById('travel_time');
+      var station_name_txt = document.getElementById('station_name');
       price_txt.onkeydown=function(ev){
           var oEvent=ev||event;
-          //alert(oEvent.keyCode);
-          if (oEvent.keyCode==32||oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8||oEvent.keyCode==16||oEvent.keyCode==220) {return true;}
-          if (oEvent.keyCode==229||oEvent.keyCode<47||oEvent.keyCode>58){return false;}
+          if (oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8||oEvent.keyCode==16||oEvent.keyCode==220) {return true;}
+          if (oEvent.keyCode==32||oEvent.keyCode==229||oEvent.keyCode<47||oEvent.keyCode>58){return false;}
+      }
+      station_name_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8||oEvent.keyCode==16||oEvent.keyCode==220) {return true;}
+          if (oEvent.keyCode==32||oEvent.keyCode!=229){return false;}
+      }
+      stop_over_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8||oEvent.keyCode==16||oEvent.keyCode==220) {return true;}
+          if (oEvent.keyCode==32||oEvent.keyCode==229||oEvent.keyCode<47||oEvent.keyCode>58){return false;}
+      }
+      travel_time_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8||oEvent.keyCode==16||oEvent.keyCode==220) {return true;}
+          if (oEvent.keyCode==32||oEvent.keyCode==229||oEvent.keyCode<47||oEvent.keyCode>58){return false;}
+      }
+      type_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8||oEvent.keyCode==16||oEvent.keyCode==220) {return true;}
+          if (oEvent.keyCode==32||oEvent.keyCode==229||oEvent.keyCode<65||oEvent.keyCode>90){return false;}
+      }
+      id_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8||oEvent.keyCode==16||(oEvent.keyCode>=65&&oEvent.keyCode<=90)||(oEvent.keyCode>=48&&oEvent.keyCode<=57)||oEvent.keyCode==189) {return true;}
+          else {return false;}
       }
     </script>
     <script src="/static/vendor/jquery/jquery.min.js"></script>

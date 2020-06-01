@@ -26,39 +26,37 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
   </head>
   <body>
-    <div id="warning_page" style="display: none;position:absolute;background:black;opacity:50%;width:100%;height:100%;z-index:50;"></div>
-    <div id="warning" style="display: none;position: fixed; left: 30%; top: 15%; width:40%; height: 370px;background:#2d3035; z-index: 180">
+    <div id="warning_page" style="display:none;position:absolute;background:black;opacity:50%;width:100%;height:100%;z-index:50;"></div>
+    <div id="warning" style="display:none;position: fixed; left: 30%; top: 15%; width:40%; height: 370px;background:#2d3035; z-index: 180">
       <div class="row" style="padding: 30px">
               <div class="col-lg-12">
                 <div class="block" style="margin-bottom: 0">
                   <div class="block-body">
-                    <form id="m_input" class="form-horizontal">
+                    <form id="m_input" method="post" class="form-horizontal">
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Username</label>
-                        <div class="col-sm-9">
-                          <input type="text" required='required' value="{{user_.u_name}}" class="form-control">
-                        </div>
+                        <div class="col-sm-9">{{user_.u_name}}                      </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Name</label>
                         <div class="col-sm-9">
-                          <input type="text" required='required' value="{{user_.name}}" class="form-control">
+                          <input type="text" name="name" id="name" required='required' value="{{user_.name}}" class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Mail Address</label>
                         <div class="col-sm-9">
-                          <input type="text" required='required' value="{{user_.mail}}" class="form-control">
+                          <input type="text" id="email" name="email" required='required' value="{{user_.mail}}" class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Priviledge</label>
                         <div class="col-sm-9">
-                          <input type="number" required='required' value="{{user_.p_}}" min="1" max="10" class="form-control">
+                          <input type="number" name="priviledge" required='required' value="{{user_.p_}}" min="1" max="10" class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
@@ -66,6 +64,12 @@
                         <div class="col-sm-9 ml-auto">
                           <input type="submit" class="btn btn-primary" value="modify"> 
                           <input type="button" style="margin-left: 20px" onclick="warning.style.display='none'; warning_page.style.display='none'" type="button" class="btn btn-primary" value="cancel">
+                        </div>
+                      </div>
+                      <div class="form-group row" style="display: none">
+                        <label class="col-sm-3 form-control-label">Username</label>
+                        <div class="col-sm-9">
+                          <input type="text" name="username" value="{{user_.u_name}}" class="form-control">
                         </div>
                       </div>
                     </form>
@@ -97,8 +101,8 @@
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
           <div class="title">
-            <h1 class="h5">User1#1723</h1>
-            <p>Unknown</p>
+            <h1 class="h5">{}</h1>
+            <p>Priviledge:{}</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus-->
@@ -132,6 +136,9 @@
       <!-- Sidebar Navigation end-->
       <div class="page-content">
         <!-- Breadcrumb-->
+        {% for message in get_flashed_messages() %}
+          <div style="position: relative;padding: 7px 10px;margin: 20px ;color: white;font-size: 15px;background-color: #DB6574; border-radius: 5px">{{ message }}</div>
+        {% endfor %}
         <div class="container-fluid">
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -144,13 +151,13 @@
               <div class="col-lg-12">                           
                 <div class="block">
                   <div class="block-body">
-                    <form class="form-inline">
+                    <form method="post" class="form-inline">
                       <div class="form-group">
                         <label for="inlineFormInput" class="sr-only">Name</label>
-                        <input id="inlineFormInput" required='required' type="text" placeholder="Username" class="mr-sm-3 form-control">
+                        <input id="inlineFormInput" value="{{q_user_value}}" name="username" required='required' type="text" placeholder="Username" class="mr-sm-3 form-control">
                       </div>
                       <div class="form-group">
-                        <input type="button" onclick="q_user_t.style.display='block'" value="Query" class="btn btn-primary">
+                        <input type="submit" value="Query" class="btn btn-primary">
                       </div>
                     </form>
                   </div>
@@ -158,7 +165,7 @@
                 </div>
               </div>
             </div>
-            <div class="row" id="q_user_t" style="display: none;">
+            <div class="row" id="q_user_t" style={{q_user_display}}>
               <div class="col-lg-12">
                 <div class="block">
                   <div class="table-responsive"> 
@@ -193,7 +200,7 @@
         <footer class="footer">
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
-              <p class="no-margin-bottom">Copyright &copy;</p>
+              <p class="no-margin-bottom">ACM 2019</p>
             </div>
           </div>
         </footer>
@@ -207,5 +214,20 @@
     <script src="/static/vendor/chart.js/Chart.min.js"></script>
     <script src="/static/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="/static/js/front.js"></script>
+    <script src="/static/js/add_user.js"></script>
+    <script type="text/javascript">
+      var name_txt = document.getElementById('name');
+      var email_txt = document.getElementById('email');
+      email_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==32) {return false;}
+          else{return true;}
+      }
+      name_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==229||oEvent.keyCode==8||oEvent.keyCode==37||oEvent.keyCode==39) {return true;}
+          else{return false;}
+      }
+    </script>
   </body>
 </html>

@@ -49,8 +49,8 @@
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
           <div class="title">
-            <h1 class="h5">User1#1723</h1>
-            <p>Unknown</p>
+            <h1 class="h5">{}</h1>
+            <p>Priviledge:{}</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus-->
@@ -101,14 +101,14 @@
                   <div class="block-body">
                     <form method="post" class="form-inline">
                       <div class="form-group">
-                        <input required="required" name="train_id" id="inlineFormInputGroup" type="text" placeholder="Train ID" class="mr-sm-3 form-control form-control">
+                        <input required="required" value='{{train_id_value}}' name="train_id" id="inlineFormInputGroup" type="text" placeholder="Train ID" class="mr-sm-3 form-control form-control">
                       </div>
                       <div class="form-group">
-                        <input type="submit" value="Delete" class="btn btn-primary">
+                        <input type="submit" id="delete_sub" value="Delete" class="btn btn-primary">
                       </div>
                     </form>
                   </div>
-                  <div style="margin-top: 20px"><small>You can and only can delete the train which isn't released. Not sure? <a href="query_train.html"> Go to check train info.</a></small></div>
+                  <div style="margin-top: 20px"><small>你仅能删除发布的车次。 Not sure? <a href="query_train.html"> Go to check train info.</a></small></div>
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@
         <footer class="footer">
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
-              <p class="no-margin-bottom">Copyright &copy;</p>
+              <p class="no-margin-bottom">ACM 2019</p>
             </div>
           </div>
         </footer>
