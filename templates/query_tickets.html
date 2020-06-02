@@ -49,8 +49,8 @@
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
           <div class="title">
-            <h1 class="h5">User1#1723</h1>
-            <p>Unknown</p>
+            <h1 class="h5">{}</h1>
+            <p>Priviledge:{}</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus-->
@@ -84,6 +84,9 @@
       <!-- Sidebar Navigation end-->
       <div class="page-content">
         <!-- Breadcrumb-->
+        {% for message in get_flashed_messages() %}
+          <div style="position: relative;padding: 7px 10px;margin: 20px ;color: white;font-size: 15px;background-color: #DB6574; border-radius: 5px">{{ message }}</div>
+        {% endfor %}
         <div class="container-fluid">
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -97,28 +100,28 @@
                 <div class="block">
                   <div class="title"><strong>Query tickets</strong></div>
                   <div class="block-body">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="post">
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 25px;padding-right:  0px; padding-top: 5px;">from</div>
                             <div class="col-md-5" style="padding-left: 50px;padding-right:  5px;">
-                              <input type="text" placeholder="Beijing" class="form-control">
+                              <input required="required" name="from" type="text" value="{{from_v}}" placeholder="上海" id="from" class="form-control">
                             </div>
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">to</div>
                             <div class="col-md-5" style="padding-left: 5px;padding-right:  15px;">
-                              <input type="text" placeholder="Shanghai" class="form-control">
+                              <input required="required" name="to" type="text" value="{{to_v}}" placeholder="北京" id="to" class="form-control">
                             </div>
                           </div>
                           <div class="line"></div>
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 25px;padding-right:  0px; padding-top: 5px;">Date</div>
                             <div class="col-md-5" style="padding-left: 50px;padding-right:  5px;">
-                              <input type="number" min = "1" max = "12" class="form-control">
+                              <input required="required" name="month" type="number" value="{{month_v}}" min = "6" max = "8" class="form-control">
                             </div>
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">-</div>
                             <div class="col-md-5" style="padding-left: 5px;padding-right:  15px;">
-                              <input type="number" min = "1" max = "30" class="form-control">
+                              <input required="required" name="date" type="number" value="{{date_v}}" min = "1" max = "31" class="form-control">
                             </div>
                           </div>
                           <div class="line"></div>
@@ -134,7 +137,7 @@
                           <div class="line"></div>
                           <div class="form-group row">
                             <div class="col-sm-11 ml-auto" style="padding-left: 50px;">
-                              <button onclick="q_tickets_t.style.display='block'" type="button" class="btn btn-primary">Query</button>
+                              <button type="submit" class="btn btn-primary">Query</button>
                             </div>
                           </div>
                         </div>
@@ -147,35 +150,35 @@
                 <div class="block">
                   <div class="title"><strong>Query transfer</strong></div>
                   <div class="block-body">
-                    <form class="form-horizontal">
+                    <form method="post" class="form-horizontal">
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 25px;padding-right:  0px; padding-top: 5px;">from</div>
                             <div class="col-md-5" style="padding-left: 50px;padding-right:  5px;">
-                              <input type="text" placeholder="Beijing" class="form-control">
+                              <input required="required" name="from_" type="text" value="{{from__v}}" placeholder="上海" id="from_" class="form-control">
                             </div>
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">to</div>
                             <div class="col-md-5" style="padding-left: 5px;padding-right:  15px;">
-                              <input type="text" placeholder="Shanghai" class="form-control">
+                              <input required="required" name="to_" type="text" value="{{to__v}}" placeholder="北京" id="to_" class="form-control">
                             </div>
                           </div>
                           <div class="line"></div>
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 25px;padding-right:  0px; padding-top: 5px;">Date</div>
                             <div class="col-md-5" style="padding-left: 50px;padding-right:  5px;">
-                              <input type="number" min = "1" max = "12" class="form-control">
+                              <input required="required" name="month_" type="number" value="{{month__v}}" min = "6" max = "8" class="form-control">
                             </div>
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">-</div>
                             <div class="col-md-5" style="padding-left: 5px;padding-right:  15px;">
-                              <input type="number" min = "1" max = "30" class="form-control">
+                              <input required="required" name="date_" type="number" value="{{date__v}}" min = "1" max = "31" class="form-control">
                             </div>
                           </div>
                           <div class="line"></div>
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">Priority</div>
                             <div class="col-sm-11" style="padding-left: 50px;padding-right:  15px;">
-                            <select name="account" disabled="disabled" class="form-control mb-3 mb-3">
+                            <select name="account_" disabled="disabled" class="form-control mb-3 mb-3">
                               <option>none</option>
                             </select>
                             </div>
@@ -183,7 +186,7 @@
                           <div class="line"></div>
                           <div class="form-group row">
                             <div class="col-sm-11 ml-auto" style="padding-left: 50px;">
-                              <button id="q_transfer" type="button" class="btn btn-primary">Query</button>
+                              <button id="q_transfer" type="submit" class="btn btn-primary">Query</button>
                             </div>
                           </div>
                         </div>
@@ -193,7 +196,7 @@
                 </div>
               </div>
             </div>
-            <div class="row" id="q_tickets_t" style="display: none;">
+            <div class="row" id="q_tickets_t" style={{q_ticket_display}}>
               <div class="col-lg-12">
                 <div class="block">
                   <div class="table-responsive"> 
@@ -202,14 +205,11 @@
                         <tr>
                           <th>#</th>
                           <th style="text-align: center">Train ID</th>
-                          <th style="text-align: center">Departure station</th>
-                          <th style="text-align: center">Departure date</th>
-                          <th style="text-align: center">Departure time</th>
-                          <th style="text-align: center">Arrival date</th>
-                          <th style="text-align: center">Arrival time</th>
-                          <th style="text-align: center">Arrival station</th>
-                          <th style="text-align: center">Price</th>
-                          <th style="text-align: center">Seat</th>
+                          <th style="text-align: center">行程</th>
+                          <th style="text-align: center">出发时间</th>
+                          <th style="text-align: center">到达时间</th>
+                          <th style="text-align: center">单程价</th>
+                          <th style="text-align: center">剩余座位</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -217,12 +217,9 @@
                         <tr>
                           <th>{{tickets.index(ticket_)+1}}</th>
                           <td style="text-align: center">{{ticket_.id_}}</td>
-                          <td style="text-align: center">{{ticket_.from_}}</td>
-                          <td style="text-align: center">{{ticket_.from_date}}</td>
-                          <td style="text-align: center">{{ticket_.from_time}}</td>
-                          <td style="text-align: center">{{ticket_.to}}</td>
-                          <td style="text-align: center">{{ticket_.to_date}}</td>
-                          <td style="text-align: center">{{ticket_.to_time}}</td>
+                          <td style="text-align: center">从{{ticket_.from_}}到{{ticket_.to}}</td>
+                          <td style="text-align: center">{{ticket_.from_date}} {{ticket_.from_time}}</td>
+                          <td style="text-align: center">{{ticket_.to_date}} {{ticket_.to_time}}</td>
                           <td style="text-align: center">{{ticket_.price}}</td>
                           <td style="text-align: center">{{ticket_.seats}}</td>
                         </tr>
@@ -238,7 +235,7 @@
         <footer class="footer">
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
-              <p class="no-margin-bottom">Copyright &copy;</p>
+              <p class="no-margin-bottom">ACM 2019</p>
             </div>
           </div>
         </footer>
@@ -252,5 +249,31 @@
     <script src="/static/vendor/chart.js/Chart.min.js"></script>
     <script src="/static/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="/static/js/front.js"></script>
+    <script type="text/javascript">
+      var from_txt = document.getElementById('from');
+      var to_txt = document.getElementById('to');
+      var from__txt = document.getElementById('from_');
+      var to__txt = document.getElementById('to_');
+      from_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==229||oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8) {return true;}
+          else{return false;}
+      }
+      to_txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==229||oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8) {return true;}
+          else{return false;}
+      }
+      from__txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==229||oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8) {return true;}
+          else{return false;}
+      }
+      to__txt.onkeydown=function(ev){
+          var oEvent=ev||event;
+          if (oEvent.keyCode==229||oEvent.keyCode==37||oEvent.keyCode==39||oEvent.keyCode==8) {return true;}
+          else{return false;}
+      }
+    </script>
   </body>
 </html>

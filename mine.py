@@ -97,8 +97,8 @@ def check_station_name(input, x):
     return 1
 
 def check_date(x, y):
-    if x == 6 and 0<y<31:
+    if int(x) == 6 and 0<int(y)<31:
         return 1
-    if (x == 7 or x == 8) and 0 < y <= 31:
+    if (int(x) == 7 or int(x) == 8) and 0 < int(y) <= 31:
         return 1
     return 0 

@@ -97,8 +97,8 @@
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
           <div class="title">
-            <h1 class="h5">User1#1723</h1>
-            <p>Unknown</p>
+            <h1 class="h5">{}</h1>
+            <p>Priviledge:{}</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus-->
@@ -132,6 +132,9 @@
       <!-- Sidebar Navigation end-->
       <div class="page-content">
         <!-- Breadcrumb-->
+        {% for message in get_flashed_messages() %}
+          <div style="position: relative;padding: 7px 10px;margin: 20px ;color: white;font-size: 15px;background-color: #DB6574; border-radius: 5px">{{ message }}</div>
+        {% endfor %}
         <div class="container-fluid">
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -144,13 +147,13 @@
               <div class="col-lg-12">                           
                 <div class="block">
                   <div class="block-body">
-                    <form class="form-inline">
+                    <form method="post" class="form-inline">
                       <div class="form-group">
                         <label for="inlineFormInput" class="sr-only">Name</label>
-                        <input id="inlineFormInput" type="text" placeholder="Username" class="mr-sm-3 form-control">
+                        <input id="inlineFormInput" required value="{{username_v}}" name="username" type="text" placeholder="Username" class="mr-sm-3 form-control">
                       </div>
                       <div class="form-group">
-                        <input type="button" onclick="q_order_t.style.display='block'" value="Query" class="btn btn-primary">
+                        <input type="submit"  value="Query" class="btn btn-primary">
                       </div>
                     </form>
                   </div>
@@ -158,7 +161,7 @@
                 </div>
               </div>
             </div>
-            <div class="row" id="q_order_t" style="display: none;">
+            <div class="row" id="q_order_t" style="{{q_order_display}}">
               <div class="col-lg-12">
                 <div class="block">
                   <div class="table-responsive"> 
@@ -168,14 +171,11 @@
                           <th>#</th>
                           <th style="text-align: center">Status</th>
                           <th style="text-align: center">Train ID</th>
-                          <th style="text-align: center">Departure station</th>
-                          <th style="text-align: center">Departure date</th>
-                          <th style="text-align: center">Departure time</th>
-                          <th style="text-align: center">Arrival date</th>
-                          <th style="text-align: center">Arrival time</th>
-                          <th style="text-align: center">Arrival station</th>
-                          <th style="text-align: center">Price</th>
-                          <th style="text-align: center">Num</th>
+                          <th style="text-align: center">行程</th>
+                          <th style="text-align: center">出发时间</th>
+                          <th style="text-align: center">到达时间</th>
+                          <th style="text-align: center">单程价</th>
+                          <th style="text-align: center">张数</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -184,12 +184,9 @@
                           <th>{{orders.index(order)+1}}</th>
                           <td style="text-align: center">{{order.status}}</td>
                           <td style="text-align: center">{{order.id_}}</td>
-                          <td style="text-align: center">{{order.from_}}</td>
-                          <td style="text-align: center">{{order.from_date}}</td>
-                          <td style="text-align: center">{{order.from_time}}</td>
-                          <td style="text-align: center">{{order.to}}</td>
-                          <td style="text-align: center">{{order.to_date}}</td>
-                          <td style="text-align: center">{{order.to_time}}</td>
+                          <td style="text-align: center">{{order.from_}}至{{order.to}}</td>
+                          <td style="text-align: center">{{order.from_date}} {{order.from_time}}</td>
+                          <td style="text-align: center">{{order.to_date}} {{order.to_time}}</td>
                           <td style="text-align: center">{{order.price}}</td>
                           <td style="text-align: center">{{order.num}}</td>
                         </tr>
@@ -205,7 +202,7 @@
         <footer class="footer">
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
-              <p class="no-margin-bottom">Copyright &copy;</p>
+              <p class="no-margin-bottom">ACM 2019</p>
             </div>
           </div>
         </footer>
