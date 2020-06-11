@@ -57,11 +57,13 @@ def add_train():
 		if not check_date(int(sale_month1), int(sale_date1)):
 			flash('Invalid input: '+sale_month1+'-'+sale_date1+'.')
 			return render_template('add_train.html', train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
-		if (not check_date(int(sale_month2), int(sale_date2))) or (int(sale_month1) > int(sale_month2)) or ((int(sale_month1)==int(sale_month2))and(int(sale_date1)>int(sale_date2))):
+		if (not check_date(int(sale_month2), int(sale_date2))) or (int(sale_month1) > int(sale_month2)) or ( (int(sale_month1)==int(sale_month2)) and (int(sale_date1)>int(sale_date2))):
 			flash('Invalid input: '+sale_month2+'-'+sale_date2+'.')
 			return render_template('add_train.html', train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
-		
-		#将train_id_送到后台并接受返回信息
+		date1 = form_date(sale_month1, sale_date1)
+		date2 = form_date(sale_month2, sale_date2)
+		start_time = form_time(hour, minute)
+		#add_train_str = get_result("add_train -i {} -n {} -m {} -s {} -p {} -x {} -t {} -o {} -d {}|{} -y {}".format(train_id_, station_num, seat_num, staton_name, price, start_time, travel_time, stop_over_time, date1, date2, train_type))
 		if train_id_ == 'cht':
 			add_train_str = '0'
 		else:
@@ -91,7 +93,8 @@ def query_train():
 		if not check_date(month, date):
 			flash('Invalid input: '+month+'-'+date+'.')
 			return render_template('query_train.html', trains=trains, train_id=train_id_, train_type=train_type, q_train_display=q_train_display, train_id_v = train_id, month_v = month, date_v = date)
-		#将train_id_和date送到后台并接受返回信息
+		date_ = form_date(month, date)
+		#trains_str = get_result("query_train -i {} -d {}".format(train_id_, date_))
 		if train_id_ == 'cht':
 			trains_str = "上海|xx-xx|xx:xx|12-21 |13:23| 100|50\n南京|12-22| 14:23|12-21 |17:53|100|50\n北京|12-25 |1:41|xx-xx|xx:xx |100|x"
 		else:
@@ -125,7 +128,7 @@ def release():
 		if train_id_ == '!':
 			flash('Invalid input: "'+ train_id +'". (A valid train ID should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
 			return render_template('release.html', train_id_v=train_id)
-		#将train_id_送到后台并接受返回信息
+		#train_id_str = get_result("release_train -i {}".format(train_id_))
 		if train_id_ == 'cht':
 			train_id_str = '0'
 		else:
@@ -149,7 +152,7 @@ def delete():
 		if train_id_ == '!':
 			flash('Invalid input: "'+ train_id +'". (A valid train ID should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
 			return render_template('delete.html', train_id_value=train_id)
-		#将train_id_送到后台并接受返回信息
+		#train_id_str = get_result("delete_train -i {}".format(train_id_))
 		if train_id_ == 'cht':
 			train_id_str = '0'
 		else:
@@ -185,7 +188,7 @@ def add_user():
 		if name_ == '!':
 			flash('Invalid name. 姓名由二至五个汉字组成。')
 			return render_template('add user.html', username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
-		#将train_id_送到后台并接受返回信息
+		#username_str = get_result("add_user -c {} -u {} -p {} -n {} -m {} -g {}".format(current_user, username, password, name, email, priviledge))
 		if username_ == 'cht':
 			username_str = '0'
 		else:
@@ -213,7 +216,7 @@ def query_user():
 		if name_ == '!':
 			flash('Invalid name. 姓名由二至五个汉字组成。')
 			return render_template('query_user.html', user_=user_, q_user_display=q_user_display, q_user_value='')
-		#将train_id_送到后台并接受返回信息
+		#name_str = get_result("modify_profile -c {} -u {} -p {} -n {} -m {} -g {}".format(current_user, username, password, name, email, priviledge))
 		if name == '爷':
 			name_str = '0'
 		else:
@@ -231,7 +234,7 @@ def query_user():
 		if username_ == '!':
 			flash('Invalid input: "'+ username +'". (A valid username should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
 			return render_template('query_user.html', user_=user_, q_user_display=q_user_display, q_user_value=username)
-		#将train_id_送到后台并接受返回信息
+		#user_str = get_result("query_user -c {} -u {}".format(current_user, username))
 		if username_ == 'cht':
 			user_str = 'CHT|爷爷|cht@163.com|5'
 		else:
@@ -264,7 +267,8 @@ def query_tickets():
 			if not check_date(int(month_), int(date_)):
 				flash('Invalid input: '+month_+'-'+date_+'.')
 				return render_template('query_tickets.html', tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from_,to__v=to_,month__v=month_,date__v=date_,q_ticket_display='display:none')
-			#将train_id_送到后台并接受返回信息
+			date__ = form_date(month_, date_)
+			#tickets_str = get_result("query_transfer -s {} -t {} -d {}".format(from__, to, date_))
 			if from_ == '上海':
 				tickets_str = 'CHT|上海|7-21 |13:23|8-21 |13:23|北京|100|30'
 			
@@ -295,7 +299,8 @@ def query_tickets():
 			if not check_date(int(month), int(date)):
 				flash('Invalid input: '+month+'-'+date+'.')
 				return render_template('query_tickets.html', tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' )
-			#将train_id_送到后台并接受返回信息
+			date_ = form_date(month, date)
+			#tickets_str = get_result("query_ticket -s {} -t {} -d {} -p {}".format(from__, to, date_, p_))
 			if from__ == '上海':
 				tickets_str = 'CHT|上海|7-21 |13:23|8-21 |13:23|北京|100|30\nCHT|上海|7-21 |13:23|8-21 |13:23|北京|100|50'
 			
@@ -325,7 +330,7 @@ def query_order():
 		if username_ == '!':
 			flash('Invalid input: "'+ username +'". (A valid username should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
 			return render_template('query_order.html', orders=orders, username_v=username, q_order_display=q_order_display)
-		#将train_id_和date送到后台并接受返回信息
+		#orders_str = get_result("query_order -u {}".format(username_))
 		if username_ == 'cht':
 			orders_str = 'IS PENDING|CHT|Shanghai|12-21 |13:23|12-21 |13:23|Beijing|100|50\nIS PENDING|CHT|Shanghai|12-21 |13:23|12-21 |13:23|Beijing|100|50'
 		else:
@@ -370,8 +375,8 @@ def buy():
 		if not check_date(month, date):
 			flash('Invalid input: '+ month+'-'+date +'.')
 			return render_template('buy.html', username_v=username, number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
-		
-		#将train_id_送到后台并接受返回信息
+		date_ = form_date(month, date)
+		#buy_str = get_result("buy_ticket -u {} -i {} -d {} -n {} -f {} -t {} -q {}".format(username_, id__, date_, number, from_, to, account))
 		if username_ == 'cht':
 			buy_str = '0'
 		else:
@@ -395,7 +400,7 @@ def refund():
 		if username_ == '!':
 			flash('Invalid input: "'+ username +'". (A valid username should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
 			return render_template('refund.html', username_v=username, num_v=num)
-		#将train_id_送到后台并接受返回信息
+		#refund_str = get_result("refund_ticket -u {} -n {}".format(username_, num))
 		if username_ == 'cht':
 			refund_str = '0'
 		else:

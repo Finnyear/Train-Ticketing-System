@@ -1,3 +1,22 @@
+import socket, re
+
+back_end = ("127.0.0.1", 1234)
+
+def get_result(info):
+    global sk
+    try:
+        sk = socket.socket()
+        sk.settimeout(100)
+        sk.connect(back_end)
+        sk.sendall(bytes(info, encoding='utf-8'))
+        result = str(sk.recv(8192).strip(), encoding='utf-8')
+        return result
+    except UnicodeDecodeError:
+        raise SyntaxError('Unexpected result')
+    finally:
+        if sk:
+            sk.close()
+
 class Order_:
     status = ''
     id_ = ''
@@ -38,23 +57,8 @@ class User_:
 
 def id_check_valid(input_id):
     final_id = ''
-    cnt_space = 0
+    input_id = input_id.strip()
     for i in input_id:
-        if i == ' ' and (cnt_space == 0 or cnt_space == 2):
-            continue
-        if i != ' ' and cnt_space == 0:
-            cnt_space = 1
-            if (i <= 'Z' and i >= 'A') or (i <= 'z' and i >= 'a'):
-                final_id += i
-                continue
-            else:
-                return '!'
-        if i != ' ' and cnt_space == 2:
-            return '!'
-        if i == ' ' and cnt_space == 1:
-            cnt_space = 2
-            continue
-
         if (i <= '9' and i >= '0') or (i <= 'Z' and i >= 'A') or (i <= 'z' and i >= 'a') or i == '_':
             final_id += i
         else:
@@ -102,3 +106,21 @@ def check_date(x, y):
     if (int(x) == 7 or int(x) == 8) and 0 < int(y) <= 31:
         return 1
     return 0 
+
+def form_date(x, y):
+    if int(y) < 10:
+        return "0{}-0{}".format(x, y)
+    else:
+        return "0{}-{}".format(x, y)
+
+def form_time(x, y):
+    if int(x)<10:
+        if int(y)<10:
+            return "0{}:0{}".format(x, y)
+        else:
+            return "0{}:{}".format(x, y)
+    else:
+        if int(y)<10:
+            return "{}:0{}".format(x, y)
+        else:
+            return "{}:{}".format(x, y)
