@@ -58,6 +58,9 @@ class User_:
 def id_check_valid(input_id):
     final_id = ''
     input_id = input_id.strip()
+    k = input_id[0]
+    if not( (k <= 'Z' and k >= 'A') or (k <= 'z' and k >= 'a')):
+        return '!'
     for i in input_id:
         if (i <= '9' and i >= '0') or (i <= 'Z' and i >= 'A') or (i <= 'z' and i >= 'a') or i == '_':
             final_id += i

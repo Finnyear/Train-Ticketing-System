@@ -32,15 +32,18 @@
           <div class="row">
             <!-- Form Panel    -->
             <div class="col-lg-6">
-              <div class="form d-flex align-items-center">
+              {% for message in get_flashed_messages() %}
+                <div style="position: relative;padding: 7px 10px;margin-left: 17px;margin-bottom: 5px;color: white;font-size: 15px;background-color: #DB6574; border-radius: 5px">{{ message }}</div>
+              {% endfor %}
+              <div class="form d-flex align-items-center" >
                 <div class="content">
-                  <form method="get" class="form-validate mb-4">
+                  <form method="post" class="form-validate mb-4">
                     <div class="form-group">
-                      <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
+                      <input id="login-username" type="text" name="id" required data-msg="Please enter your username" class="input-material" value="{{u_v}}">
                       <label for="login-username" class="label-material">User Name</label>
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material">
+                      <input id="login-password" type="password" name="password" required data-msg="Please enter your password" class="input-material">
                       <label for="login-password" class="label-material">Password</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
