@@ -1,21 +1,29 @@
 from flask import Flask, session, render_template, request, redirect, flash, url_for
+import random as rd
 from mine import *
+
+user_num = 1
+order_num = 10
+train_num = 14
+released_num = 6
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'no secret'
 
 @app.route('/')
-def guide():
-	if 'C_USER' in session:
-		return redirect(url_for('index'))
-	else:
-		return redirect(url_for('login'))
-
 @app.route('/index.html')
 def index():
 	if not 'C_USER' in session:
+		return redirect(url_for('tourist'))
+	global user_num, train_num, order_num, released_num
+	return render_template('index.html', C_USER=session['C_USER'], P=session['P'], order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
+
+@app.route('/tourist.html',methods=['GET', 'POST'])
+def tourist():
+	if request.method == 'POST':
 		return redirect(url_for('login'))
-	return render_template('index.html', C_USER=session['C_USER'], P=session['P'])
+	global user_num, train_num, order_num, released_num
+	return render_template('tourist.html', rand=rd.randint(1, 100000), order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
 
 @app.route('/logout')
 def logout():
@@ -36,7 +44,7 @@ def login():
 		######################
 		if result == '1':
 			session['C_USER'] = user_id
-			#result = get_result("query_profile {}".format(session['C_USER'])).split(' ')
+			#result = get_result("query_profile -c {} -u {}".format(session['C_USER'], session['C_USER'])).split(' ')
 			result = 'cht cht cht@163.com 5'.split(' ')
 			##################
 			session['P'] = result[3]
@@ -67,13 +75,15 @@ def register():
 		if password_ == '!':
 			flash('Invalid password. ')
 			return render_template('register.html', u_v=user_id, p_v = password, n_v = name, e_v = email)
-		#result = get_result("register -u {} -p {} -m {} -n {}".format(user_id, password, email, name))
+		#result = get_result("add_user -u {} -p {} -m {} -n {}".format(user_id, password, email, name))
 		if user_id =='cht':
 			result = '0'
 		else:
 			result = '-1'
 		#########################
 		if result != '-1':
+			global user_num
+			user_num+=1
 			flash('Success')
 			return redirect(url_for('login'))
 		else:
@@ -140,6 +150,8 @@ def add_train():
 			flash('Fail. Please check whether your input has obeyed the rules given below.')
 			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
 
+		global train_num
+		train_num+=1
 		flash('Success. Train: "' + train_id_ +'" has been added.')
 		return redirect(url_for('add_train'))
 	return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id_v, train_type_v=train_type_v, station_num_v=station_num_v, seat_num_v=seat_num_v, station_name_v=station_name_v, price_v=price_v, hour_v=hour_v, minute_v=minute_v, travel_time_v=travel_time_v, stop_over_time_v=stop_over_time_v, sale_month1_v=sale_month1_v, sale_month2_v= sale_month2_v, sale_date1_v=sale_date1_v, sale_date2_v=sale_date2_v)
@@ -208,7 +220,8 @@ def release():
 		if train_id_str == '-1':
 			flash('Fail. Maybe go to check the train info first.')
 			return render_template('release.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id)
-
+		global released_num
+		released_num+=1
 		flash('Success. Train: "' + train_id_ +'" has been released.')
 		return redirect(url_for('release'))
 
@@ -235,6 +248,8 @@ def delete():
 			flash('Fail. Maybe go to check the train info first.')
 			return render_template('delete.html', C_USER=session['C_USER'], P=session['P'], train_id_value=train_id)
 
+		global train_num
+		train_num-=1
 		flash('Success. Train: "' + train_id_ +'" has been deleted.')
 		return redirect(url_for('delete'))
 
@@ -273,6 +288,8 @@ def add_user():
 			flash('Fail. Please check whether your input is valid.')
 			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
 
+		global user_num
+		user_num+=1
 		flash('Success. User: "' + username_ +'" has been added.')
 		return redirect(url_for('add_user'))
 	return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
@@ -468,7 +485,8 @@ def buy():
 		if buy_str == '-1':
 			flash('Fail. Maybe go to available ticket first.')
 			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username, number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
-
+		global order_num
+		order_num+=1
 		flash('Success.')
 
 	return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username_v, number_v=number_v, id_v=id_v,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_v,to_v=to_v)
@@ -494,7 +512,8 @@ def refund():
 		if refund_str == '-1':
 			flash('Fail. Maybe go to check your order first.')
 			return render_template('refund.html', C_USER=session['C_USER'], P=session['P'], username_v=username, num_v=num)
-
+		global order_num
+		order_num-=1
 		flash('Success. Order "' + num +'" has been refunded.')
 		return redirect(url_for('refund'))
 
@@ -506,6 +525,9 @@ def clear():
 		return redirect(url_for('login'))
 	if request.method == 'POST':
 		#get_result("clean")
+		session.pop('C_USER')
+		global user_num, order_num, train_num, released_num
+		user_num=order_num=train_num= released_num=0
 		return redirect(url_for('register'))
 	return render_template('clear.html', C_USER=session['C_USER'], P=session['P'])
 
