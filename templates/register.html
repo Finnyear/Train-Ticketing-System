@@ -17,14 +17,14 @@
   <body>
     <div class="login-page">
       <div class="container d-flex align-items-center">
-        <div class="form-holder has-shadow">
+        <div class="form-holder has-shadow" style="border-radius: 20px;" >
           <div class="row">
             <!-- Form Panel    -->
-            <div class="col-lg-6 bg-white">
+            <div class="col-lg-6">
               {% for message in get_flashed_messages() %}
                 <div style="position: relative;padding: 7px 10px;margin-left: 17px;margin-bottom: 5px;color: white;font-size: 15px;background-color: #DB6574; border-radius: 5px">{{ message }}</div>
               {% endfor %}
-              <div class="form d-flex align-items-center">
+              <div class="form d-flex align-items-center" style="border-radius: 20px;" >
                 <div class="content">
                   <form method="post" class="text-left form-validate">
                     <div class="form-group-material">

@@ -6,6 +6,7 @@ user_num = 1
 order_num = 10
 train_num = 14
 released_num = 6
+trains_pic = ['https://www.asqql.com/upfile/simg/2019-6/201962716363293181.jpg','http://a4.att.hudong.com/35/75/16300000258678136004758865151.jpg','https://tuchong.pstatp.com/296373/f/3950118.jpg','/static/train1.gif','/static/train2.gif','/static/train3.gif']
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'no secret'
@@ -16,14 +17,14 @@ def index():
 	if not 'C_USER' in session:
 		return redirect(url_for('tourist'))
 	global user_num, train_num, order_num, released_num
-	return render_template('index.html', C_USER=session['C_USER'], P=session['P'], order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
+	return render_template('index.html',url_=trains_pic[rd.randint(0, 5)],  C_USER=session['C_USER'], P=session['P'], order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
 
 @app.route('/tourist.html',methods=['GET', 'POST'])
 def tourist():
 	if request.method == 'POST':
 		return redirect(url_for('login'))
 	global user_num, train_num, order_num, released_num
-	return render_template('tourist.html', rand=rd.randint(1, 100000), order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
+	return render_template('tourist.html', url_=trains_pic[rd.randint(0,5)], rand=rd.randint(1, 100000), order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
 
 @app.route('/logout')
 def logout():
