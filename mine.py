@@ -17,6 +17,7 @@ def get_result(info):
         if sk:
             sk.close()
 
+
 class Order_:
     status = ''
     id_ = ''
