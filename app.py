@@ -6,7 +6,7 @@ user_num = 1
 order_num = 10
 train_num = 14
 released_num = 6
-trains_pic = ['https://www.asqql.com/upfile/simg/2019-6/201962716363293181.jpg','http://a4.att.hudong.com/35/75/16300000258678136004758865151.jpg','https://tuchong.pstatp.com/296373/f/3950118.jpg','/static/train1.gif','/static/train2.gif','/static/train3.gif']
+trains_pic = ['https://www.asqql.com/upfile/simg/2019-6/201962716363293181.jpg','https://tuchong.pstatp.com/296373/f/3950118.jpg','/static/train1.gif','/static/train2.gif','/static/train3.gif']
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'no secret'
@@ -17,14 +17,14 @@ def index():
 	if not 'C_USER' in session:
 		return redirect(url_for('tourist'))
 	global user_num, train_num, order_num, released_num
-	return render_template('index.html',url_=trains_pic[rd.randint(0, 5)],  C_USER=session['C_USER'], P=session['P'], order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
+	return render_template('index.html',url_=trains_pic[rd.randint(0, 4)],  C_USER=session['C_USER'], P=session['P'], order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
 
 @app.route('/tourist.html',methods=['GET', 'POST'])
 def tourist():
 	if request.method == 'POST':
 		return redirect(url_for('login'))
 	global user_num, train_num, order_num, released_num
-	return render_template('tourist.html', url_=trains_pic[rd.randint(0,5)], rand=rd.randint(1, 100000), order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
+	return render_template('tourist.html', url_=trains_pic[rd.randint(0, 4)], rand=rd.randint(1, 100000), order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
 
 @app.route('/logout')
 def logout():
@@ -76,7 +76,7 @@ def register():
 		if password_ == '!':
 			flash('Invalid password. ')
 			return render_template('register.html', u_v=user_id, p_v = password, n_v = name, e_v = email)
-		#result = get_result("add_user -u {} -p {} -m {} -n {}".format(user_id, password, email, name))
+		####result = get_result("add_user -u {} -p {} -m {} -n {}".format(user_id, password, email, name))
 		if user_id =='cht':
 			result = '0'
 		else:
@@ -88,7 +88,7 @@ def register():
 			flash('Success')
 			return redirect(url_for('login'))
 		else:
-			flash('Error.')
+			flash('Fail. 用户'+ username +'已存在。')
 			return render_template('register.html', u_v=user_id, p_v = password, n_v = name, e_v = email)
 	return render_template('register.html', u_v=u_v, p_v = p_v, n_v = n_v, e_v = e_v)
 
@@ -152,7 +152,7 @@ def add_train():
 			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
 
 		global train_num
-		train_num+=1
+		train_num += 1
 		flash('Success. Train: "' + train_id_ +'" has been added.')
 		return redirect(url_for('add_train'))
 	return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id_v, train_type_v=train_type_v, station_num_v=station_num_v, seat_num_v=seat_num_v, station_name_v=station_name_v, price_v=price_v, hour_v=hour_v, minute_v=minute_v, travel_time_v=travel_time_v, stop_over_time_v=stop_over_time_v, sale_month1_v=sale_month1_v, sale_month2_v= sale_month2_v, sale_date1_v=sale_date1_v, sale_date2_v=sale_date2_v)
@@ -178,7 +178,7 @@ def query_train():
 		date_ = form_date(month, date)
 		#trains_str = get_result("query_train -i {} -d {}".format(train_id_, date_))
 		if train_id_ == 'cht':
-			trains_str = "上海|xx-xx|xx:xx|12-21 |13:23| 100|50\n南京|12-22| 14:23|12-21 |17:53|100|50\n北京|12-25 |1:41|xx-xx|xx:xx |100|x"
+			trains_str = "上海 xx-xx xx:xx 12-21 13:23 100 50\n南京 12-22 14:23 12-21 17:53 100 50\n北京 12-25 1:41 xx-xx xx:xx 100 x"
 		else:
 			trains_str = '-1'
 		###############################	
@@ -190,7 +190,7 @@ def query_train():
 		trains_str_ = trains_str.split('\n')
 		for train_str in trains_str_:
 			train_ = Train_()
-			[train_.station, train_.to_date, train_.to_time, train_.from_date, train_.from_time, train_.price, train_.remain] = train_str.split('|')
+			[train_.station, train_.to_date, train_.to_time, train_.from_date, train_.from_time, train_.price, train_.remain] = train_str.split(' ')
 			if trains_str_.index(train_str) == 0:
 				train_.to_time = '-'
 				train_.to_date = '-'
@@ -219,7 +219,7 @@ def release():
 			train_id_str = '-1'
 		###############################	
 		if train_id_str == '-1':
-			flash('Fail. Maybe go to check the train info first.')
+			flash('Fail. The train doesn\'t exit or has already been released.')
 			return render_template('release.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id)
 		global released_num
 		released_num+=1
@@ -246,7 +246,7 @@ def delete():
 			train_id_str = '-1'
 		###############################	
 		if train_id_str == '-1':
-			flash('Fail. Maybe go to check the train info first.')
+			flash('Fail. The train doesn\'t exit or has already been released.')
 			return render_template('delete.html', C_USER=session['C_USER'], P=session['P'], train_id_value=train_id)
 
 		global train_num
@@ -279,6 +279,12 @@ def add_user():
 		if name_ == '!':
 			flash('Invalid name. 姓名由二至五个汉字组成。')
 			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
+		if name_ == '!':
+			flash('Invalid name. 姓名由二至五个汉字组成。')
+			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
+		if priviledge >= session['P']:
+			flash('无权限。你只能添加比自己权限更低的用户。')
+			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
 		#username_str = get_result("add_user -c {} -u {} -p {} -n {} -m {} -g {}".format(current_user, username, password, name, email, priviledge))
 		if username_ == 'cht':
 			username_str = '0'
@@ -286,7 +292,7 @@ def add_user():
 			username_str = '-1'
 		###############################	
 		if username_str == '-1':
-			flash('Fail. Please check whether your input is valid.')
+			flash('Fail. 用户'+ username +'已存在。')
 			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
 
 		global user_num
@@ -329,9 +335,14 @@ def query_user():
 		if username_ == '!':
 			flash('Invalid input: "'+ username +'". (A valid username should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
 			return render_template('query_user.html', C_USER=session['C_USER'], P=session['P'], user_=user_, q_user_display=q_user_display, q_user_value=username)
-		#user_str = get_result("query_user -c {} -u {}".format(current_user, username))
+		#user_file = get_result("query_user -c {} -u {}".format(username, username))
+		#if user_file != '-1' and user_file.split(' ')[3] >= session['P']:
+			#flash('无权限。你只能添加比自己权限更低的用户。')
+			#return render_template('query_user.html', C_USER=session['C_USER'], P=session['P'], user_=user_, q_user_display=q_user_display, q_user_value=username)
+
+		#user_str = get_result("query_user -c {} -u {}".format(session['C_USER'], username))
 		if username_ == 'cht':
-			user_str = 'CHT|爷爷|cht@163.com|5'
+			user_str = 'CHT 爷爷 cht@163.com 5'
 		else:
 			user_str = '-1'
 		###############################	
@@ -339,7 +350,7 @@ def query_user():
 			flash('Fail. User not found.')
 			return render_template('query_user.html', C_USER=session['C_USER'], P=session['P'], user_=user_, q_user_display=q_user_display, q_user_value=username)
 		q_user_display = 'display:block'
-		[user_.u_name, user_.name, user_.mail, user_.p_] = user_str.split('|')
+		[user_.u_name, user_.name, user_.mail, user_.p_] = user_str.split(' ')
 	return render_template('query_user.html', C_USER=session['C_USER'], P=session['P'], user_=user_, q_user_display=q_user_display, q_user_value='')
 
 @app.route('/query_tickets.html', methods=['GET','POST'])
@@ -367,8 +378,7 @@ def query_tickets():
 			date__ = form_date(month_, date_)
 			#tickets_str = get_result("query_transfer -s {} -t {} -d {}".format(from__, to, date_))
 			if from_ == '上海':
-				tickets_str = 'CHT|上海|7-21 |13:23|8-21 |13:23|北京|100|30'
-			
+				tickets_str = 'CHT 上海 7-21 13:23 8-21 13:23 北京 100 30'
 			else:
 				tickets_str = '-1'
 			###############################	
@@ -379,7 +389,7 @@ def query_tickets():
 				q_ticket_display = 'display:block'
 				for ticket_str in tickets_str.split('\n'):
 					ticket_ = Ticket_()
-					[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.to_date, ticket_.to_time,ticket_.to, ticket_.price, ticket_.seats] = ticket_str.split('|')
+					[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.to_date, ticket_.to_time,ticket_.to, ticket_.price, ticket_.seats] = ticket_str.split(' ')
 					tickets.append(ticket_)
 		else:
 			from__ = request.form.get('from')
@@ -399,7 +409,7 @@ def query_tickets():
 			date_ = form_date(month, date)
 			#tickets_str = get_result("query_ticket -s {} -t {} -d {} -p {}".format(from__, to, date_, p_))
 			if from__ == '上海':
-				tickets_str = 'CHT|上海|7-21 |13:23|8-21 |13:23|北京|100|30\nCHT|上海|7-21 |13:23|8-21 |13:23|北京|100|50'
+				tickets_str = 'CHT 上海 7-21 13:23 8-21 13:23 北京 100 30\nCHT 上海 7-21 13:23 8-21 13:23 北京 100 50'
 			
 			else:
 				tickets_str = '-1'
@@ -411,7 +421,7 @@ def query_tickets():
 				q_ticket_display = 'display:block'
 				for ticket_str in tickets_str.split('\n'):
 					ticket_ = Ticket_()
-					[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.to_date, ticket_.to_time,ticket_.to, ticket_.price, ticket_.seats] = ticket_str.split('|')
+					[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.to_date, ticket_.to_time,ticket_.to, ticket_.price, ticket_.seats] = ticket_str.split(' ')
 					tickets.append(ticket_)
 
 	return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display=q_ticket_display)
@@ -421,37 +431,34 @@ def query_order():
 	if not 'C_USER' in session:
 		return redirect(url_for('login'))
 	orders = []
-	username_v = ''
-	q_order_display = 'display:none'
 	if request.method == 'POST':
-		username = request.form.get('username')
-		username_ = id_check_valid(username)
-		if username_ == '!':
-			flash('Invalid input: "'+ username +'". (A valid username should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
-			return render_template('query_order.html', C_USER=session['C_USER'], P=session['P'], orders=orders, username_v=username, q_order_display=q_order_display)
-		#orders_str = get_result("query_order -u {}".format(username_))
-		if username_ == 'cht':
-			orders_str = 'IS PENDING|CHT|Shanghai|12-21 |13:23|12-21 |13:23|Beijing|100|50\nIS PENDING|CHT|Shanghai|12-21 |13:23|12-21 |13:23|Beijing|100|50'
-		else:
-			orders_str = '-1'
-		###############################	
-		if orders_str == '-1':
-			flash('User "'+ username_ +' not found.')
-			return render_template('query_order.html', C_USER=session['C_USER'], P=session['P'], orders=orders, username_v=username, q_order_display=q_order_display)
-		q_order_display = 'display:block'
-		for order_str in orders_str.split('\n'):
-			bought_ticket = Order_()
-			[bought_ticket.status, bought_ticket.id_, bought_ticket.from_, bought_ticket.from_date, bought_ticket.from_time, bought_ticket.to_date, bought_ticket.to_time, bought_ticket.to, bought_ticket.price, bought_ticket.num] = order_str.split('|')
-			orders.append(bought_ticket)
-	return render_template('query_order.html', C_USER=session['C_USER'], P=session['P'], orders=orders, username_v=username_v, q_order_display=q_order_display)
+		number = request.form.get('number')
+		#refund_str = get_result("refund_ticket -u {} -n {}".format(session['C_USER'], number))
+		flash('Success. Number '+ number+' has been refunded.')
+		return redirect(url_for('query_order'))
+	username = session['C_USER']
+	#orders_str = get_result("query_order -u {}".format(username_))
+	orders_str = 'PENDING CHT Shanghai 12-21 13:23 12-21 13:23 Beijing 100 50\nPENDING CHT Shanghai 12-21 13:23 12-21 13:23 Beijing 100 50'
+	###############################	
+	q_order_display = 'display:block'
+	for order_str in orders_str.split('\n'):
+		bought_ticket = Order_()
+		[bought_ticket.status, bought_ticket.id_, bought_ticket.from_, bought_ticket.from_date, bought_ticket.from_time, bought_ticket.to_date, bought_ticket.to_time, bought_ticket.to, bought_ticket.price, bought_ticket.num] = order_str.split(' ')
+		orders.append(bought_ticket)
+	return render_template('query_order.html', C_USER=session['C_USER'], P=session['P'], orders=orders, q_order_display=q_order_display)
 
 @app.route('/buy.html', methods=['GET','POST'])
 def buy():
 	if not 'C_USER' in session:
 		return redirect(url_for('login'))
-	username_v=id_v=month_v=date_v=number_v=account_v=from_v=to_v = ''
+	id_v=month_v=date_v=number_v=account_v=from_v=to_v = ''
 	if request.method == 'POST':
-		username = request.form.get('username')
+		if 'buy' in request.form:
+			train_id = request.form.get('train_id')
+			from_ = request.form.get('from')
+			to_= request.form.get('to')
+			number_v = month_v = date_v = account_v = ''
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=train_id ,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_,to_v=to_)
 		id_ = request.form.get('id')
 		from_ = request.form.get('from')
 		to = request.form.get('to')
@@ -459,66 +466,31 @@ def buy():
 		date = request.form.get('date')
 		number = request.form.get('number')
 		account = request.form.get('account')
-		username_ = id_check_valid(username)
-		if username_ == '!':
-			flash('Invalid input: "'+ username +'". (A valid username should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username, number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
 		id__ = id_check_valid(id_)
 		if id__ == '!':
 			flash('Invalid input: "'+ id_ +'". (A valid train id should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username, number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
 		if not check_station_name(from_, 1) :
 			flash('Invalid input: "'+ from_ +'". 站名应为不超过十个汉字组成。')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username, number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
 		if not check_station_name(to, 1):
 			flash('Invalid input: "'+ to +'". 站名应为不超过十个汉字组成。')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username, number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
 		if not check_date(month, date):
 			flash('Invalid input: '+ month+'-'+date +'.')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username, number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
 		date_ = form_date(month, date)
-		#buy_str = get_result("buy_ticket -u {} -i {} -d {} -n {} -f {} -t {} -q {}".format(username_, id__, date_, number, from_, to, account))
-		if username_ == 'cht':
-			buy_str = '0'
-		else:
-			buy_str = '-1'
+		#buy_str = get_result("buy_ticket -u {} -i {} -d {} -n {} -f {} -t {} -q {}".format(session['C_USER'], id__, date_, number, from_, to, account))
+		buy_str = '0'
 		###############################	
 		if buy_str == '-1':
-			flash('Fail. Maybe go to available ticket first.')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username, number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			flash('Fail. Maybe go to query available ticket first.')
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
 		global order_num
-		order_num+=1
+		order_num += 1
 		flash('Success.')
 
-	return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], username_v=username_v, number_v=number_v, id_v=id_v,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_v,to_v=to_v)
-
-@app.route('/refund.html', methods=['GET','POST'])
-def refund():
-	if not 'C_USER' in session:
-		return redirect(url_for('login'))
-	username_v=num_v = ''
-	if request.method == 'POST':
-		username = request.form.get('username')
-		num = request.form.get('num')
-		username_ = id_check_valid(username)
-		if username_ == '!':
-			flash('Invalid input: "'+ username +'". (A valid username should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
-			return render_template('refund.html', C_USER=session['C_USER'], P=session['P'], username_v=username, num_v=num)
-		#refund_str = get_result("refund_ticket -u {} -n {}".format(username_, num))
-		if username_ == 'cht':
-			refund_str = '0'
-		else:
-			refund_str = '-1'
-		###############################	
-		if refund_str == '-1':
-			flash('Fail. Maybe go to check your order first.')
-			return render_template('refund.html', C_USER=session['C_USER'], P=session['P'], username_v=username, num_v=num)
-		global order_num
-		order_num-=1
-		flash('Success. Order "' + num +'" has been refunded.')
-		return redirect(url_for('refund'))
-
-	return render_template('refund.html', C_USER=session['C_USER'], P=session['P'], username_v=username_v, num_v=num_v)
+	return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=id_v,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_v,to_v=to_v)
 
 @app.route('/clear.html', methods=['GET', 'POST'])
 def clear():

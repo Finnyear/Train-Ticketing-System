@@ -15,54 +15,6 @@
     <link rel="icon" type="image/x-icon" href="/static/train.png"/>
   </head>
   <body>
-    <div id="warning_page" style="display: none;position:absolute;background:black;opacity:50%;width:100%;height:100%;z-index:50;"></div>
-    <div id="warning" style="display: none;position: fixed; left: 30%; top: 15%; width:40%; height: 370px;background:#2d3035; z-index: 180">
-      <div class="row" style="padding: 30px">
-              <div class="col-lg-12">
-                <div class="block" style="margin-bottom: 0">
-                  <div class="block-body">
-                    <form id="m_input" class="form-horizontal">
-                      <div class="line"></div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Username</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="line"></div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Name</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="line"></div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Mail Address</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="line"></div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Priviledge</label>
-                        <div class="col-sm-9">
-                          <input type="number" min="1" max="10" class="form-control">
-                        </div>
-                      </div>
-                      <div class="line"></div>
-                      <div class="form-group row">
-                        <div class="col-sm-9 ml-auto">
-                          <input type="submit" class="btn btn-primary" value="modify"> 
-                          <input type="button" style="margin-left: 20px" id="cancel" type="button" class="btn btn-primary" value="cancel">
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-    </div>
     <header class="header">   
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid d-flex align-items-center justify-content-between">
@@ -110,9 +62,8 @@
           <li><a href="#exampledropdownDropdown3" aria-expanded="true" data-toggle="collapse"> <i class="icon-bill"></i>Tickets </a>
             <ul id="exampledropdownDropdown3" class="collapse list-unstyled show">
               <li><a href="query_tickets.html">Query Tickets</a></li>
-              <li class = "active"><a href="query_order.html">Query Order</a></li>
+              <li class = "active"><a href="query_order.html">My Order</a></li>
               <li><a href="buy.html">Buy Tickets</a></li>
-              <li><a href="refund.html">Refund Tickets</a></li>
             </ul>
           </li>
           <li><a href="clear.html"> <i class="icon-close"></i>Clear all data </a></li>
@@ -127,29 +78,11 @@
         <div class="container-fluid">
           <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active">Query order     </li>
+            <li class="breadcrumb-item active">My order     </li>
           </ul>
         </div>
         <section class="no-padding-top">
           <div class="container-fluid">
-            <div class="row">
-              <div class="col-lg-12">                           
-                <div class="block">
-                  <div class="block-body">
-                    <form method="post" class="form-inline">
-                      <div class="form-group">
-                        <label for="inlineFormInput" class="sr-only">Name</label>
-                        <input id="inlineFormInput" required value="{{username_v}}" name="username" type="text" placeholder="Username" class="mr-sm-3 form-control">
-                      </div>
-                      <div class="form-group">
-                        <input type="submit"  value="Query" class="btn btn-primary">
-                      </div>
-                    </form>
-                  </div>
-                  <div style="margin-top: 20px"><small>You can and only can query order of user who has logged in.</small></div>
-                </div>
-              </div>
-            </div>
             <div class="row" id="q_order_t" style="{{q_order_display}}">
               <div class="col-lg-12">
                 <div class="block">
@@ -165,6 +98,7 @@
                           <th style="text-align: center">到达时间</th>
                           <th style="text-align: center">单程价</th>
                           <th style="text-align: center">张数</th>
+                          <th style="text-align: center"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -178,6 +112,7 @@
                           <td style="text-align: center">{{order.to_date}} {{order.to_time}}</td>
                           <td style="text-align: center">{{order.price}}</td>
                           <td style="text-align: center">{{order.num}}</td>
+                          <td style="text-align: center"><form method="post"><input style="display: none" name="number" value="{{orders.index(order)+1}}"><input type="submit" name="refund" class="btn btn-primary" value="Refund"></form></td>
                         </tr>
                         {% endfor %}
                       </tbody>
