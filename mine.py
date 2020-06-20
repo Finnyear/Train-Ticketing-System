@@ -29,6 +29,7 @@ class Order_:
     to_time = ''
     price = ''
     num = ''
+    none_ = ''
     
 class Ticket_:
     id_ = ''
@@ -36,6 +37,7 @@ class Ticket_:
     from_date = ''
     from_time = ''
     to = ''
+    none_ = ''
     to_date = ''
     to_time = ''
     price = ''
@@ -46,6 +48,7 @@ class Train_:
     to_date = ''
     to_time = ''
     from_date = ''
+    none_ = ''
     from_time = ''
     price = ''
     remain = ''

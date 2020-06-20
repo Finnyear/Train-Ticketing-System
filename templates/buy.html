@@ -59,13 +59,13 @@
               <li><a href="query_user.html">Modify/Query user info</a></li>
             </ul>
           </li>
-          <li><a href="#exampledropdownDropdown3" aria-expanded="true" data-toggle="collapse"> <i class="icon-bill"></i>Tickets </a>
+          <li><a href="#exampledropdownDropdown3" aria-expanded="true" data-toggle="collapse"> <i class="icon-check"></i>Tickets </a>
             <ul id="exampledropdownDropdown3" class="collapse list-unstyled show">
               <li><a href="query_tickets.html">Query Tickets</a></li>
-              <li><a href="query_order.html">My Order</a></li>
               <li class = "active"><a href="buy.html">Buy Tickets</a></li>
             </ul>
           </li>
+          <li><a href="query_order.html"><i class="icon-bill"></i>My Order</a></li>
           <li><a href="clear.html"> <i class="icon-close"></i>Clear all data </a></li>
         </ul>
       </nav>
@@ -112,18 +112,18 @@
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 25px;padding-right:  0px; padding-top: 5px;">Date</div>
                             <div class="col-md-5" style="padding-left: 50px;padding-right:  5px;">
-                              <input type="number" min = "6" max = "8" class="form-control" required value="{{month_v}}" name="month">
+                              <input type="number" min = "{{m_min}}" max = "{{m_max}}" class="form-control" required value="{{month_v}}" name="month">
                             </div>
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">-</div>
                             <div class="col-md-5" style="padding-left: 5px;padding-right:  15px;">
-                              <input type="number" min = "1" max = "31" class="form-control" required value="{{date_v}}" name="date">
+                              <input type="number" min = "{{d_min}}" max = "{{d_max}}" class="form-control" required value="{{date_v}}" name="date">
                             </div>
                           </div>
                           <div class="line"></div>
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">Number</div>
                             <div class="col-sm-11" style="padding-left: 50px;padding-right:  15px;">
-                              <input type="number" min = "1" class="form-control" required value="{{number_v}}" name="number">
+                              <input type="number" min = "1" max="{{s_max}}" class="form-control" required value="{{number_v}}" name="number">
                             </div>
                           </div>
                           <div class="line"></div>

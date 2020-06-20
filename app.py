@@ -84,11 +84,11 @@ def register():
 		#########################
 		if result != '-1':
 			global user_num
-			user_num+=1
-			flash('Success')
+			user_num += 1
+			flash('注册成功。')
 			return redirect(url_for('login'))
 		else:
-			flash('Fail. 用户'+ username +'已存在。')
+			flash('Fail. 用户'+ user_id +'已存在。')
 			return render_template('register.html', u_v=user_id, p_v = password, n_v = name, e_v = email)
 	return render_template('register.html', u_v=u_v, p_v = p_v, n_v = n_v, e_v = e_v)
 
@@ -178,7 +178,7 @@ def query_train():
 		date_ = form_date(month, date)
 		#trains_str = get_result("query_train -i {} -d {}".format(train_id_, date_))
 		if train_id_ == 'cht':
-			trains_str = "上海 xx-xx xx:xx 12-21 13:23 100 50\n南京 12-22 14:23 12-21 17:53 100 50\n北京 12-25 1:41 xx-xx xx:xx 100 x"
+			trains_str = "CH A\n上海 xx-xx xx:xx -> 12-21 13:23 100 50\n南京 12-22 14:23 -> 12-21 17:53 100 50\n北京 12-25 1:41 -> xx-xx xx:xx 100 x"
 		else:
 			trains_str = '-1'
 		###############################	
@@ -186,11 +186,13 @@ def query_train():
 			flash('Train "'+ train_id +'" on '+month+'-' +date +' not found.')
 			return render_template('query_train.html', C_USER=session['C_USER'], P=session['P'], trains=trains, train_id=train_id_, train_type=train_type, q_train_display=q_train_display, train_id_v = train_id, month_v = month, date_v = date)
 		q_train_display = 'display:block'
-		train_type = 'G'
 		trains_str_ = trains_str.split('\n')
 		for train_str in trains_str_:
+			if trains_str.index(train_str) == 0:
+				train_type = train_str.split(' ')[1]
+				continue
 			train_ = Train_()
-			[train_.station, train_.to_date, train_.to_time, train_.from_date, train_.from_time, train_.price, train_.remain] = train_str.split(' ')
+			[train_.station, train_.to_date, train_.to_time, train_.none_, train_.from_date, train_.from_time, train_.price, train_.remain] = train_str.split(' ')
 			if trains_str_.index(train_str) == 0:
 				train_.to_time = '-'
 				train_.to_date = '-'
@@ -359,72 +361,61 @@ def query_tickets():
 		return redirect(url_for('login'))
 	tickets = []
 	from_v =to_v =month_v =date_v =from__v =to__v =month__v =date__v =''
+	num = 2
 	q_ticket_display='display:none'
 	if request.method == 'POST':
-		if 'from_' in request.form:
-			from_ = request.form.get('from_')
-			to_ = request.form.get('to_')
-			month_ = request.form.get('month_')
-			date_ = request.form.get('date_')
-			if not check_station_name(from_, 1):
-				flash('Invlid input: "'+from_+'".站名应为不超过十个汉字组成。')
-				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from_,to__v=to_,month__v=month_,date__v=date_,q_ticket_display='display:none')
-			if not check_station_name(to_, 1):
-				flash('Invlid input: "'+to_+'".站名应为不超过十个汉字组成。')
-				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from_,to__v=to_,month__v=month_,date__v=date_,q_ticket_display='display:none')
-			if not check_date(int(month_), int(date_)):
-				flash('Invalid input: '+month_+'-'+date_+'.')
-				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from_,to__v=to_,month__v=month_,date__v=date_,q_ticket_display='display:none')
-			date__ = form_date(month_, date_)
+		from__ = request.form.get('from')
+		to = request.form.get('to')
+		month = request.form.get('month')
+		date = request.form.get('date')
+		p_ = request.form.get('account')
+		if not check_station_name(from__, 1):
+			flash('Invlid input: "'+from__+'".站名应为不超过十个汉字组成。')
+			return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' ,num = num)
+		if not check_station_name(to, 1):
+			flash('Invlid input: "'+to+'".站名应为不超过十个汉字组成。')
+			return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' ,num = num)
+		if not check_date(int(month), int(date)):
+			flash('Invalid input: '+month+'-'+date+'.')
+			return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' ,num = num)
+		date_ = form_date(month, date)
+		if p_ == 'transfer one and only':
 			#tickets_str = get_result("query_transfer -s {} -t {} -d {}".format(from__, to, date_))
-			if from_ == '上海':
-				tickets_str = 'CHT 上海 7-21 13:23 8-21 13:23 北京 100 30'
-			else:
-				tickets_str = '-1'
-			###############################	
-			if tickets_str == '-1':
-				flash('Fail. Tickets not found.')
-				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from_,to__v=to_,month__v=month_,date__v=date_,q_ticket_display='display:none')
-			else:
-				q_ticket_display = 'display:block'
-				for ticket_str in tickets_str.split('\n'):
-					ticket_ = Ticket_()
-					[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.to_date, ticket_.to_time,ticket_.to, ticket_.price, ticket_.seats] = ticket_str.split(' ')
-					tickets.append(ticket_)
-		else:
-			from__ = request.form.get('from')
-			to = request.form.get('to')
-			month = request.form.get('month')
-			date = request.form.get('date')
-			p_ = request.form.get('account')
-			if not check_station_name(from__, 1):
-				flash('Invlid input: "'+from__+'".站名应为不超过十个汉字组成。')
-				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' )
-			if not check_station_name(to, 1):
-				flash('Invlid input: "'+to+'".站名应为不超过十个汉字组成。')
-				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' )
-			if not check_date(int(month), int(date)):
-				flash('Invalid input: '+month+'-'+date+'.')
-				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' )
-			date_ = form_date(month, date)
-			#tickets_str = get_result("query_ticket -s {} -t {} -d {} -p {}".format(from__, to, date_, p_))
 			if from__ == '上海':
-				tickets_str = 'CHT 上海 7-21 13:23 8-21 13:23 北京 100 30\nCHT 上海 7-21 13:23 8-21 13:23 北京 100 50'
-			
+				tickets_str = 'TTT 上海 7-21 13:23 -> 北京 8-21 13:23 100 30\nCHT 上海 7-21 13:23 -> 北京 8-21 13:23 100 50'
 			else:
 				tickets_str = '-1'
 			###############################	
 			if tickets_str == '-1':
 				flash('Fail. Tickets not found.')
-				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' )
+				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' ,num = num)
 			else:
 				q_ticket_display = 'display:block'
 				for ticket_str in tickets_str.split('\n'):
 					ticket_ = Ticket_()
-					[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.to_date, ticket_.to_time,ticket_.to, ticket_.price, ticket_.seats] = ticket_str.split(' ')
+					[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.none_,ticket_.to, ticket_.to_date, ticket_.to_time, ticket_.price, ticket_.seats] = ticket_str.split(' ')
 					tickets.append(ticket_)
+				return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display=q_ticket_display,num = num)
+		#tickets_str = get_result("query_ticket -s {} -t {} -d {} -p {}".format(from__, to, date_, p_))
+		if from__ == '上海':
+			tickets_str = '2\nCHT 上海 7-21 13:23 -> 北京 8-21 13:23 100 30\nCHT 上海 7-21 13:23 -> 北京 8-21 13:23 100 50'
+		
+		else:
+			tickets_str = '-1'
+		###############################	
+		if tickets_str == '-1':
+			flash('Fail. Tickets not found.')
+			return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from__,to_v=to,month_v=month,date_v=date,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display='display:none' ,num = num)
+		else:
+			q_ticket_display = 'display:block'
+			for ticket_str in tickets_str.split('\n'):
+				if tickets_str.index(ticket_str) == 0:
+					continue
+				ticket_ = Ticket_()
+				[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.none_,ticket_.to, ticket_.to_date, ticket_.to_time, ticket_.price, ticket_.seats] = ticket_str.split(' ')
+				tickets.append(ticket_)
 
-	return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display=q_ticket_display)
+	return render_template('query_tickets.html', C_USER=session['C_USER'], P=session['P'], tickets=tickets, from_v=from_v,to_v=to_v,month_v=month_v,date_v=date_v,from__v=from__v,to__v=to__v,month__v=month__v,date__v=date__v,q_ticket_display=q_ticket_display,num = num)
 
 @app.route('/query_order.html',methods=['GET','POST'])
 def query_order():
@@ -434,16 +425,16 @@ def query_order():
 	if request.method == 'POST':
 		number = request.form.get('number')
 		#refund_str = get_result("refund_ticket -u {} -n {}".format(session['C_USER'], number))
-		flash('Success. Number '+ number+' has been refunded.')
+		flash('Success. Order '+ number+' has been refunded.')
 		return redirect(url_for('query_order'))
 	username = session['C_USER']
 	#orders_str = get_result("query_order -u {}".format(username_))
-	orders_str = 'PENDING CHT Shanghai 12-21 13:23 12-21 13:23 Beijing 100 50\nPENDING CHT Shanghai 12-21 13:23 12-21 13:23 Beijing 100 50'
+	orders_str = 'PENDING CHT 上海 12-21 13:23 -> 北京 12-21 13:23 100 50\nPENDING CHT 上海 12-21 13:23 -> 北京 12-21 13:23 100 50'
 	###############################	
 	q_order_display = 'display:block'
 	for order_str in orders_str.split('\n'):
 		bought_ticket = Order_()
-		[bought_ticket.status, bought_ticket.id_, bought_ticket.from_, bought_ticket.from_date, bought_ticket.from_time, bought_ticket.to_date, bought_ticket.to_time, bought_ticket.to, bought_ticket.price, bought_ticket.num] = order_str.split(' ')
+		[bought_ticket.status, bought_ticket.id_, bought_ticket.from_, bought_ticket.from_date, bought_ticket.from_time, bought_ticket.none_, bought_ticket.to, bought_ticket.to_date, bought_ticket.to_time, bought_ticket.price, bought_ticket.num] = order_str.split(' ')
 		orders.append(bought_ticket)
 	return render_template('query_order.html', C_USER=session['C_USER'], P=session['P'], orders=orders, q_order_display=q_order_display)
 
@@ -451,14 +442,26 @@ def query_order():
 def buy():
 	if not 'C_USER' in session:
 		return redirect(url_for('login'))
-	id_v=month_v=date_v=number_v=account_v=from_v=to_v = ''
+	id_v=month_v=date_v=number_v=account_v=from_v=to_v =''
+	m_max = 8
+	m_min = 6
+	d_max = 31
+	d_min = 1
+	s_max = 100000
 	if request.method == 'POST':
 		if 'buy' in request.form:
 			train_id = request.form.get('train_id')
 			from_ = request.form.get('from')
 			to_= request.form.get('to')
+			date_max = request.form.get('d_max')
+			date_max = date_max.split('-')
+			date_min = request.form.get('d_min')
+			date_min = date_min.split('-')
+			s_max = request.form.get('s_max')
+			m_max = int(date_max[0])
+			m_min = int(date_min[0])
 			number_v = month_v = date_v = account_v = ''
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=train_id ,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_,to_v=to_)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=train_id ,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_,to_v=to_,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		id_ = request.form.get('id')
 		from_ = request.form.get('from')
 		to = request.form.get('to')
@@ -469,28 +472,30 @@ def buy():
 		id__ = id_check_valid(id_)
 		if id__ == '!':
 			flash('Invalid input: "'+ id_ +'". (A valid train id should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		if not check_station_name(from_, 1) :
 			flash('Invalid input: "'+ from_ +'". 站名应为不超过十个汉字组成。')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		if not check_station_name(to, 1):
 			flash('Invalid input: "'+ to +'". 站名应为不超过十个汉字组成。')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		if not check_date(month, date):
 			flash('Invalid input: '+ month+'-'+date +'.')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		date_ = form_date(month, date)
 		#buy_str = get_result("buy_ticket -u {} -i {} -d {} -n {} -f {} -t {} -q {}".format(session['C_USER'], id__, date_, number, from_, to, account))
-		buy_str = '0'
+		buy_str = '50'
 		###############################	
 		if buy_str == '-1':
 			flash('Fail. Maybe go to query available ticket first.')
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		global order_num
 		order_num += 1
-		flash('Success.')
-
-	return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=id_v,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_v,to_v=to_v)
+		if buy_str == 'queue':
+			flash('余票不足，正在排队. Check your status in \'My Order\'.')
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=id_v,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_v,to_v=to_v,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
+		flash('支付成功：'+buy_str+' yuan. Confirm your purchase in \'My Order\'.')
+	return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=id_v,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_v,to_v=to_v,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 
 @app.route('/clear.html', methods=['GET', 'POST'])
 def clear():

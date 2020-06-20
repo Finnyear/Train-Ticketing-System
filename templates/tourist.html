@@ -78,7 +78,9 @@
           </li>
           <li><a href="#" id="user"> <i class="icon-user"></i>User </a>
           </li>
-          <li><a href="#" id="ticket"> <i class="icon-bill"></i>Tickets </a>
+          <li><a href="#" id="ticket"> <i class="icon-check"></i>Tickets </a>
+          </li>
+          <li><a href="#" id="order"> <i class="icon-bill"></i>My order </a>
           </li>
           <li><a href="#" id="clear"> <i class="icon-close"></i>Clear all data </a></li>
         </ul>
@@ -171,6 +173,11 @@
       var warning_page_button = document.getElementById("warning_page");
       var warning_button = document.getElementById("warning");
       var cancel_button = document.getElementById("cancel");
+      var order_button = document.getElementById("order");
+      order_button.onclick=function(){
+          warning_page_button.style.display="inline";
+          warning_button.style.display="inline";
+      }
       train_button.onclick=function(){
           warning_page_button.style.display="inline";
           warning_button.style.display="inline";
