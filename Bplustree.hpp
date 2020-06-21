@@ -549,7 +549,7 @@ public:
 			}
 		}
 	}
-	void final_erase(Key &key)
+	void final_erase(Key key)
 	{
 		if(Root==invalid_pos) return;
 		node root=LOAD_NODE(Root);
@@ -662,7 +662,7 @@ public:
 	{
 		return Head==invalid_pos;
 	}
-	off_t insert(Key &key,const T &Val)
+	off_t insert(Key key,T Val)
 	{
 		off_t Pos=(off_t(sz))*(off_t(sizeof(T)));
 		final_insert(key,Pos);
@@ -670,11 +670,11 @@ public:
 		sz++;
 		return Pos;
 	}
-	void erase(Key &key)
+	void erase(Key key)
 	{
 		final_erase(key);
 	}
-	bool exist(Key &key)
+	bool exist(Key key)
 	{
 		if(Root==invalid_pos) return false;
 		node p=LOAD_NODE(Root);
@@ -694,7 +694,7 @@ public:
 		load_key(_buf,k,k2);
 		return EQUAL(k2,key);
 	}
-	T find(Key &key)
+	T find(Key key)
 	{
 		if(Root==invalid_pos) return T();
 		node p=LOAD_NODE(Root);
@@ -719,7 +719,7 @@ public:
 		}
 		else return T();
 	}
-	bool change(Key &key,T Val)
+	bool change(Key key,T Val)
 	{
 		if(Root==invalid_pos) return false;
 		node p=LOAD_NODE(Root);
@@ -746,7 +746,7 @@ public:
 		}
 		else return false;
 	}
-	void getall(std::vector<std::pair<Key,T> > & vec)
+	void getall(vector<std::pair<Key,T> > & vec)
 	{
 		if(Root==invalid_pos) return;
 		node p=LOAD_NODE(Head);
