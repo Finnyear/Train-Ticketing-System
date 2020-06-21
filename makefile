@@ -8,4 +8,5 @@ main :  Connector.cpp \
 		Orders.cpp \
 		Trains.cpp \
 		Users.cpp \
-		-o code
+		-o code \
+		-std=c++11 -O2
