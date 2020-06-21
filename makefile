@@ -1,12 +1,12 @@
-main :  Connector.cpp \
-		Main.cpp \
-		Orders.cpp \
+main : Users.cpp \
 		Trains.cpp \
-		Users.cpp
-	g++ Connector.cpp \
-		Main.cpp \
 		Orders.cpp \
+		Connector.cpp \
+		Main.cpp 
+	g++ Users.cpp \
 		Trains.cpp \
-		Users.cpp \
+		Orders.cpp \
+		Connector.cpp \
+		Main.cpp \
 		-o code \
 		-std=c++11 -O2
