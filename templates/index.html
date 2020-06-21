@@ -61,26 +61,26 @@
           <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
           <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-dashboard"></i>Train </a>
             <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
-              <li><a href="add_train.html">Add train</a></li>
-              <li><a href="query_train.html">Train info</a></li>
-              <li><a href="release.html">Release train</a></li>
-              <li><a href="delete.html">Delete train</a></li>
+              <li><a href="add_train.html">添加</a></li>
+              <li><a href="query_train.html">查询</a></li>
+              <li><a href="release.html">发布</a></li>
+              <li><a href="delete.html">删除</a></li>
             </ul>
           </li>
           <li><a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse"> <i class="icon-user"></i>User </a>
             <ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
-              <li><a href="add user.html">Add user</a></li>
-              <li><a href="query_user.html">Modify/Query user info</a></li>
+              <li><a href="add user.html">添加新用户</a></li>
+              <li><a href="query_user.html">查询/修改</a></li>
             </ul>
           </li>
           <li><a href="#exampledropdownDropdown3" aria-expanded="false" data-toggle="collapse"> <i class="icon-check"></i>Tickets </a>
             <ul id="exampledropdownDropdown3" class="collapse list-unstyled ">
-              <li><a href="query_tickets.html">Query Tickets</a></li>
-              <li><a href="buy.html">Buy Tickets</a></li>
+              <li><a href="query_tickets.html">票务查询</a></li>
+              <li><a href="buy.html">买票</a></li>
             </ul>
           </li>
           <li><a href="query_order.html"><i class="icon-bill"></i>My Order</a></li>
-          <li><a href="clear.html"> <i class="icon-close"></i>Clear all data </a></li>
+          <li><a href="clear.html"> <i class="icon-close"></i>Clear</a></li>
         </ul>
       </nav>
       <!-- Sidebar Navigation end-->
@@ -107,7 +107,7 @@
                 <div class="statistic-block block">
                   <div class="progress-details d-flex align-items-end justify-content-between">
                     <div class="title">
-                      <div class="icon"><i class="icon-contract"></i></div><strong>Added trains</strong>
+                      <div class="icon"><i class="icon-settings-1"></i></div><strong>Added trains</strong>
                     </div>
                     <div class="number dashtext-2">{{train_num}}</div>
                   </div>
@@ -117,7 +117,7 @@
                 <div class="statistic-block block">
                   <div class="progress-details d-flex align-items-end justify-content-between">
                     <div class="title">
-                      <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong>Released</strong>
+                      <div class="icon"><i class="icon-log-out"></i></div><strong>Released</strong>
                     </div>
                     <div class="number dashtext-3">{{released_num}}</div>
                   </div>
@@ -127,9 +127,9 @@
                 <div class="statistic-block block">
                   <div class="progress-details d-flex align-items-end justify-content-between">
                     <div class="title">
-                      <div class="icon"><i class="icon-writing-whiteboard"></i></div><strong>Orders</strong>
+                      <div class="icon"><i class="icon-cloud"></i></div><strong>Total sales</strong>
                     </div>
-                    <div class="number dashtext-4">{{order_num}}</div>
+                    <div class="number dashtext-4">{{total_sale}}</div>
                   </div>
                 </div>
               </div>

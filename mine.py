@@ -30,6 +30,8 @@ class Order_:
     price = ''
     num = ''
     none_ = ''
+    disabled = ''
+    color = ''
     
 class Ticket_:
     id_ = ''

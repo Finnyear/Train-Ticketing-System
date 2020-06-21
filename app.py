@@ -3,7 +3,7 @@ import random as rd
 from mine import *
 
 user_num = 1
-order_num = 10
+total_sale = 50
 train_num = 14
 released_num = 6
 trains_pic = ['https://www.asqql.com/upfile/simg/2019-6/201962716363293181.jpg','https://tuchong.pstatp.com/296373/f/3950118.jpg','/static/train1.gif','/static/train2.gif','/static/train3.gif']
@@ -16,15 +16,15 @@ app.config['SECRET_KEY'] = 'no secret'
 def index():
 	if not 'C_USER' in session:
 		return redirect(url_for('tourist'))
-	global user_num, train_num, order_num, released_num
-	return render_template('index.html',url_=trains_pic[rd.randint(0, 4)],  C_USER=session['C_USER'], P=session['P'], order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
+	global user_num, train_num, total_sale, released_num
+	return render_template('index.html',url_=trains_pic[rd.randint(0, 4)],  C_USER=session['C_USER'], P=session['P'], total_sale = total_sale, train_num=train_num, user_num=user_num, released_num=released_num)
 
 @app.route('/tourist.html',methods=['GET', 'POST'])
 def tourist():
 	if request.method == 'POST':
 		return redirect(url_for('login'))
-	global user_num, train_num, order_num, released_num
-	return render_template('tourist.html', url_=trains_pic[rd.randint(0, 4)], rand=rd.randint(1, 100000), order_num=order_num, train_num=train_num, user_num=user_num, released_num=released_num)
+	global user_num, train_num, total_sale, released_num
+	return render_template('tourist.html', url_=trains_pic[rd.randint(0, 4)], rand=rd.randint(1, 100000), total_sale = total_sale, train_num=train_num, user_num=user_num, released_num=released_num)
 
 @app.route('/logout')
 def logout():
@@ -410,6 +410,7 @@ def query_tickets():
 			q_ticket_display = 'display:block'
 			for ticket_str in tickets_str.split('\n'):
 				if tickets_str.index(ticket_str) == 0:
+					num = ticket_str
 					continue
 				ticket_ = Ticket_()
 				[ticket_.id_, ticket_.from_, ticket_.from_date, ticket_.from_time, ticket_.none_,ticket_.to, ticket_.to_date, ticket_.to_time, ticket_.price, ticket_.seats] = ticket_str.split(' ')
@@ -429,14 +430,22 @@ def query_order():
 		return redirect(url_for('query_order'))
 	username = session['C_USER']
 	#orders_str = get_result("query_order -u {}".format(username_))
-	orders_str = 'PENDING CHT 上海 12-21 13:23 -> 北京 12-21 13:23 100 50\nPENDING CHT 上海 12-21 13:23 -> 北京 12-21 13:23 100 50'
+	orders_str = '2\n[pending] CHT 上海 12-21 13:23 -> 北京 12-21 13:23 100 50\n[refunded] CHT 上海 12-21 13:23 -> 北京 12-21 13:23 100 50'
 	###############################	
 	q_order_display = 'display:block'
 	for order_str in orders_str.split('\n'):
+		if orders_str.index(order_str) == 0:
+					num = order_str
+					continue
 		bought_ticket = Order_()
 		[bought_ticket.status, bought_ticket.id_, bought_ticket.from_, bought_ticket.from_date, bought_ticket.from_time, bought_ticket.none_, bought_ticket.to, bought_ticket.to_date, bought_ticket.to_time, bought_ticket.price, bought_ticket.num] = order_str.split(' ')
+		if bought_ticket.status == "[refunded]":
+			bought_ticket.disabled = "disabled"
+			bought_ticket.color = "grey"
+		bought_ticket.status = bought_ticket.status.split('[')[1]
+		bought_ticket.status = bought_ticket.status.split(']')[0]
 		orders.append(bought_ticket)
-	return render_template('query_order.html', C_USER=session['C_USER'], P=session['P'], orders=orders, q_order_display=q_order_display)
+	return render_template('query_order.html', C_USER=session['C_USER'], P=session['P'], orders=orders, q_order_display=q_order_display, num=num)
 
 @app.route('/buy.html', methods=['GET','POST'])
 def buy():
@@ -483,18 +492,22 @@ def buy():
 			flash('Invalid input: '+ month+'-'+date +'.')
 			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		date_ = form_date(month, date)
-		#buy_str = get_result("buy_ticket -u {} -i {} -d {} -n {} -f {} -t {} -q {}".format(session['C_USER'], id__, date_, number, from_, to, account))
+		if account == "若余票不足，我接受候补购票。":
+			account_ = "true"
+		else:
+			account_ = "false"
+		#buy_str = get_result("buy_ticket -u {} -i {} -d {} -n {} -f {} -t {} -q {}".format(session['C_USER'], id__, date_, number, from_, to, account_))
 		buy_str = '50'
 		###############################	
 		if buy_str == '-1':
 			flash('Fail. Maybe go to query available ticket first.')
 			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number, id_v=id_,month_v=month,date_v=date,account_v=account,from_v=from_,to_v=to,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
-		global order_num
-		order_num += 1
 		if buy_str == 'queue':
 			flash('余票不足，正在排队. Check your status in \'My Order\'.')
 			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=id_v,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_v,to_v=to_v,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		flash('支付成功：'+buy_str+' yuan. Confirm your purchase in \'My Order\'.')
+		global total_sale
+		total_sale += int(buy_str)
 	return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=id_v,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_v,to_v=to_v,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 
 @app.route('/clear.html', methods=['GET', 'POST'])
@@ -504,8 +517,8 @@ def clear():
 	if request.method == 'POST':
 		#get_result("clean")
 		session.pop('C_USER')
-		global user_num, order_num, train_num, released_num
-		user_num=order_num=train_num= released_num=0
+		global user_num, total_sale, train_num, released_num
+		user_num=total_sale=train_num= released_num=0
 		return redirect(url_for('register'))
 	return render_template('clear.html', C_USER=session['C_USER'], P=session['P'])
 
