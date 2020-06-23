@@ -57,10 +57,13 @@ buy_ticket -u Lappland -i ThereforeIsendyou -d 06-14 -n 10 -f 山东省莱西市
 query_train -i ThereforeIsendyou -d 07-12
  */
 const char* Trains :: release_train(const char* i){
+    bool jd = 0;
+    if (i[0] == '!'){jd = 1; i++;}
 	pair<int, int> hash_t = Hash.hash(i);
 	if(!bptrain.exist(hash_t)) {return "-1";}
 	train this_train = bptrain.find(hash_t);
 	if(this_train.isreleased){return "-1";}
+	if (jd) {return "not";}
 	this_train.isreleased = 1;
 	bptrain.change(hash_t, this_train);
 	bpseat.insert(hash_t, Seat(this_train.enddate - this_train.begindate + 1, this_train.stationnum, this_train.seatnum));

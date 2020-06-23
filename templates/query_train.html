@@ -15,7 +15,66 @@
     <link rel="icon" type="image/x-icon" href="/static/train.png"/>
   </head>
   <body>
-    <header class="header">   
+  <div id="warning_page" style="display:none;position:absolute;background:black;opacity:50%;width:100%;height:100%;z-index:50;"></div>
+  <div id="release_" style="display:none;position: fixed; left: 37.5%; top: 30%; width:25%; height: 150px;background:#2d3035; z-index: 180">
+    <div class="row">
+      <div class="col-lg-12" style="height: 130px">
+        <div class="block" style="padding-top: 20px;">
+          <div class="block-body" style="padding-top: 15px;">
+            <form id="m_input" method="post" class="form-horizontal">
+              <div class="line"></div>
+              <div class="form-group row">
+                <div class="col-sm-10" style="text-align: center"><strong>Release: {{train_id}}</strong></div>
+              </div>
+              <div class="line"></div>
+              <div class="form-group row">
+                <div class="col-sm-10 ml-auto">
+                  <input type="submit" name="release" class="btn btn-primary" value="release">
+                  <input type="button" style="margin-left: 20px" onclick="release_.style.display='none'; warning_page.style.display='none'" type="button" class="btn btn-primary" value="cancel">
+                </div>
+              </div>
+              <div class="form-group row" style="display: none">
+                <label class="col-sm-3 form-control-label">Username</label>
+                <div class="col-sm-9">
+                  <input type="text" name="train_id" value="{{train_id}}" class="form-control">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="delete_" style="display:none;position: fixed; left: 37.5%; top: 30%; width:25%; height: 150px;background:#2d3035; z-index: 180">
+    <div class="row">
+      <div class="col-lg-12" style="height: 130px">
+        <div class="block" style="padding-top: 20px;">
+          <div class="block-body" style="padding-top: 15px;">
+            <form id="m_input" method="post" class="form-horizontal">
+              <div class="line"></div>
+              <div class="form-group row">
+                <div class="col-sm-10" style="text-align: center"><strong>Delete: {{train_id}}</strong></div>
+              </div>
+              <div class="line"></div>
+              <div class="form-group row">
+                <div class="col-sm-10 ml-auto">
+                  <input type="submit" name="delete" class="btn btn-primary" value="delete">
+                  <input type="button" style="margin-left: 20px" onclick="delete_.style.display='none'; warning_page.style.display='none'" type="button" class="btn btn-primary" value="cancel">
+                </div>
+              </div>
+              <div class="form-group row" style="display: none">
+                <label class="col-sm-3 form-control-label">Username</label>
+                <div class="col-sm-9">
+                  <input type="text" name="train_id" value="{{train_id}}" class="form-control">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header class="header">
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid d-flex align-items-center justify-content-between">
           <div class="navbar-header">
@@ -110,7 +169,11 @@
             <div class="row" id="q_train_t" style={{q_train_display}}>
               <div class="col-lg-12">
                 <div class="block">
-                  <div class="title"><strong>Train ID: <span style="font-size: 20px;">{{train_id}}</span> ( type : <span style="font-size: 20px;">{{train_type}}</span> ) </strong></div>
+                  <div class="title">
+                    <strong>Train ID: <span style="font-size: 20px;">{{train_id}}</span> ( type : <span style="font-size: 20px;">{{train_type}}</span> ) </strong>
+                    <button class="btn btn-primary" style="background-color:{{color}}; border-color:{{color}}; margin-left: 20px; margin-right:20px" onclick="release_.style.display='block'; warning_page.style.display='block'" {{disabled}}>{{release}}</button>
+                    <button class="btn btn-primary" style="display:{{delete}}" onclick="delete_.style.display='block'; warning_page.style.display='block'" >Delete</button>
+                  </div>
                   <div class="table-responsive"> 
                     <table class="table table-striped table-hover">
                       <thead>

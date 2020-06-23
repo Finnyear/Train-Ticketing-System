@@ -146,9 +146,19 @@ def query_train():
 	if not 'C_USER' in session:
 		return redirect(url_for('login'))
 	trains = []
-	train_type = train_id_ = train_id_v = month_v = date_v = ''
+	train_type = train_id_ = train_id_v = month_v = date_v = color = delete = release=disabled= ''
 	q_train_display = 'display:none'
 	if request.method == 'POST':
+		if 'release' in request.form:
+			train_id = request.form.get('train_id')
+			get_result("release_train -i {}".format(train_id))
+			flash("Success")
+			return redirect(url_for('query_train'))
+		if 'delete' in request.form:
+			train_id = request.form.get('train_id')
+			get_result("delete_train -i {}".format(train_id))
+			flash("Success")
+			return redirect(url_for('query_train'))
 		train_id = request.form.get('train_id')
 		month = request.form.get('month')
 		date = request.form.get('date')
@@ -166,6 +176,14 @@ def query_train():
 			return render_template('query_train.html', C_USER=session['C_USER'], P=session['P'], trains=trains, train_id=train_id_, train_type=train_type, q_train_display=q_train_display, train_id_v = train_id, month_v = month, date_v = date)
 		q_train_display = 'display:block'
 		trains_str_ = trains_str.split('\n')
+		result = get_result("release_train -i !{}".format(train_id_))
+		if result == "not":
+			release = "Release"
+		else:
+			color = "grey"
+			delete = "none"
+			release = "Released"
+			disabled = "disabled"
 		for train_str in trains_str_:
 			if train_str == '':
 				continue
@@ -183,7 +201,7 @@ def query_train():
 				train_.from_date = '-'
 				train_.remain = '-'
 			trains.append(train_)
-	return render_template('query_train.html', C_USER=session['C_USER'], P=session['P'], trains=trains, train_id=train_id_, train_type=train_type, q_train_display=q_train_display, train_id_v = train_id_v, month_v = month_v, date_v = date_v)
+	return render_template('query_train.html', C_USER=session['C_USER'], P=session['P'], trains=trains, train_id=train_id_, train_type=train_type, q_train_display=q_train_display, train_id_v = train_id_v, month_v = month_v, date_v = date_v, color = color, delete = delete, release=release, disabled=disabled)
 
 @app.route('/release.html', methods=['GET', 'POST'])
 def release():
