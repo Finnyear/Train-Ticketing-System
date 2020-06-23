@@ -41,22 +41,22 @@ public:
 
 	void print_train(train t);
 
-	void add_train(const char* _trainid, int _stationnum, int _seatnum, 
-			const char _stations[][35], const int *_prices, Time _starttime, 
-			const int *_traveltimes, const int *_stopovertimes, 
+	const char* add_train(const char* _trainid, int _stationnum, int _seatnum,
+			const char _stations[][35], const int *_prices, Time _starttime,
+			const int *_traveltimes, const int *_stopovertimes,
 			Date _begindate, Date _enddate, const char _type);
 
-	void release_train(const char* i);
+	const char * release_train(const char* i);
 	
-	void query_train(const char *i, Date d);
+	const char * query_train(const char *i, Date d);
 
-	void delete_train(const char* i);
+	const char * delete_train(const char* i);
 
-	void query_ticket(const char* s, const char* t, Date d, const char* p/*, int h = 0, int m = 0*/);
+	const char * query_ticket(const char* s, const char* t, Date d, const char* p/*, int h = 0, int m = 0*/);
 
 	Ticket get_ticket(const char* s, const char* t, Date d, const char* p, const char *ii, int h = 0, int m = 0);
 
-	void query_transfer(const char* s, const char* t, Date d, const char* p);
+	const char * query_transfer(const char* s, const char* t, Date d, const char* p);
 
 	//static bool cmp_time(Ticket a, Ticket b);
 	//static bool cmp_cost(Ticket a, Ticket b);

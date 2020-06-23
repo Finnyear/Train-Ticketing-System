@@ -6,7 +6,8 @@
 #include <cmath>
 #include <cstring>
 #include <iomanip>
-#include "vector.hpp" 
+#include <winsock2.h>
+#include "vector.hpp"
 #include <sstream>
 #include "Bplustree.hpp"
 

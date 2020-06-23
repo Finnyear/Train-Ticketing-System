@@ -57,6 +57,7 @@ class Train_:
 
 class User_:
     u_name = ''
+    password = ''
     name = ''
     mail = ''
     p_ = ''

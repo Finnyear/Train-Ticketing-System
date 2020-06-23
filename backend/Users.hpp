@@ -24,17 +24,17 @@ public:
 
 	void init(Connector *_connector);
 
-	void print_user(user _user);
+	char * print_user(user _user);
 
-	void add_user(const char *c, const char *u, const char *p, const char *n, const char *m, const int g);
+	const char * add_user(const char *c, const char *u, const char *p, const char *n, const char *m, const int g);
 
-	void login(const char *u, const char *p);
+	const char * login(const char *u, const char *p);
 
-	void logout(const char *u);
+	const char * logout(const char *u);
 
-	void query_profile(const char *c, const char *u);
+	const char * query_profile(const char *c, const char *u);
 
-	void modify_profile(const char *c, const char *u, const char *p, const char *n, const char *m, const int g);
+	const char * modify_profile(const char *c, const char *u, const char *p, const char *n, const char *m, const int g);
 
 };
 

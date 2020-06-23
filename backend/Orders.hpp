@@ -25,11 +25,11 @@ public:
 
 	void init(Connector *_connector);
 
-	void buy_ticket(const char *u, const char *i, Date d, int n, const char *f, const char *t, const char *q);
+	const char * buy_ticket(const char *u, const char *i, Date d, int n, const char *f, const char *t, const char *q);
 
-	void query_order(const char *u);
+	const char * query_order(const char *u);
 
-	void refund_ticket(const char *u, int n);
+	const char * refund_ticket(const char *u, int n);
 
 };
 
