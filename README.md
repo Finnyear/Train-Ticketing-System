@@ -61,6 +61,7 @@
 ## 四、组员工作情况
 
 |  姓名  |  任务  |
+| :-----: | :-----: |
 | 储浩天 |  网页设计与前后端衔接  |
 | 任一凡 |  后端逻辑主体部分  |
 |  衡阳  |  B+树部分(含缓存、文件操作)  |
@@ -70,7 +71,7 @@
 # 《使用手册》
 
 
-### 下载安装
+### 一、下载安装
 
 * 需要python、MINGW或其他C/C++编译器
 * pip install flask以及相关第三方库
@@ -79,7 +80,7 @@
 * 在master目录下打开终端，输入flask run
 * 打开浏览器（推荐Chrome）进入网页 "http://127.0.0.1:5000/"
 
-### 注册与登录
+### 二、注册与登录
 
 * 由于未登录，第一次进入网页会路由至tourist page
 
@@ -118,7 +119,7 @@
 ![avatar](/img/index.png)
 
 
-### 火车操作
+### 三、火车操作
 
 * 点击sidebar中的Train->添加，进入add_train页面
 
@@ -152,7 +153,7 @@
 
 ![avatar](/img/delete.png)
 
-### 用户操作
+### 四、用户操作
 
 * 点击sidebar中的User->添加新用户，进入add_user页面
 
@@ -174,7 +175,7 @@
 
 ![avatar](/img/modify.png)
 
-### 票务操作
+### 五、票务操作
 
 * 点击sidebar中的Tickets->票务查询，进入query_tickets页面
 
@@ -192,7 +193,7 @@
 
 ![avatar](/img/buy_success.png)
 
-###其他操作
+### 六、其他操作
 
 * 点击sidebar中的My Order，进入我的订单，可进行退票操作
 
