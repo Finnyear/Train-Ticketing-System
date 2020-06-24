@@ -64,11 +64,11 @@ def register():
 			return render_template('register.html', u_v=user_id, p_v = password, n_v = name, e_v = email)
 		name_ = name_check_valid(name)
 		if name_ == '!':
-			flash('Invalid input: '+name)
+			flash('Invalid name. 姓名由二至五个汉字组成。')
 			return render_template('register.html', u_v=user_id, p_v = password, n_v = name, e_v = email)
 		password_ = password_check_valid(password)
 		if password_ == '!':
-			flash('Invalid password. ')
+			flash('Invalid password. (A valid password should be a string with at least 6 letters, at most 30 letters, with an initial letter and made up of letter(s), number(s) or underline(s).)')
 			return render_template('register.html', u_v=user_id, p_v = password, n_v = name, e_v = email)
 		result = get_result("add_user -c ! -u {} -p {} -m {} -n {}".format(user_id, password, email, name))
 		if result != '-1':
@@ -271,9 +271,6 @@ def add_user():
 		if name_ == '!':
 			flash('Invalid name. 姓名由二至五个汉字组成。')
 			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
-		if name_ == '!':
-			flash('Invalid name. 姓名由二至五个汉字组成。')
-			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
 		if priviledge >= session['P']:
 			flash('无权限。你只能添加比自己权限更低的用户。')
 			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
@@ -438,7 +435,6 @@ def buy():
 			date_max = date_max.split('-')
 			date_min = request.form.get('d_min')
 			date_min = date_min.split('-')
-			s_max = request.form.get('s_max')
 			m_max = int(date_max[0])
 			m_min = int(date_min[0])
 			number_v = month_v = date_v = account_v = ''
