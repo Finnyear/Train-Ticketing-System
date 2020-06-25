@@ -187,7 +187,7 @@
  
 ![avatar](/img/query_ticket_result.png)
 
-* 点击Buy，跳转至buy_tickets页面，车站名自动填充，日期可选范围更改为该旅程可行的时间范围（也可以通过点击sidebar中的Tickets->买票，自主进入buy_tickets页面）
+* 点击Buy，跳转至buy_tickets页面，车站名和日期会自动填充（也可以通过点击sidebar中的Tickets->买票，自主进入buy_tickets页面）
 
 ![avatar](/img/query_to_buy.png)
 
