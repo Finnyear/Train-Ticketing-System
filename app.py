@@ -109,14 +109,26 @@ def add_train():
 		if len(train_type) != 1 or train_type > 'Z' or train_type < 'A':
 			flash('Invalid input: "'+ train_type +'". (A valid train type should be a capital letter.)')
 			return render_template('add_train.html', train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
+		if check_station_name(station_name, int(station_num)) == 2:
+			flash('车站数量与站数不符。')
+			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
 		if not check_station_name(station_name, int(station_num)):
 			flash('Invalid input: station_name.')
+			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
+		if check_num(price, int(station_num) - 1, 100000) == 2:
+			flash('价格输入数量与站数不符。')
 			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
 		if not check_num(price, int(station_num) - 1, 100000):
 			flash('Invalid input: price.')
 			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
+		if check_num(travel_time, int(station_num) - 1, 10000) == 2:
+			flash('行车时间输入数量与站数不符。')
+			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
 		if not check_num(travel_time, int(station_num) - 1, 10000):
 			flash('Invalid input: travel time.')
+			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
+		if check_num(stop_over_time, int(station_num) - 2, 10000) == 2:
+			flash('经停时间输入数量与站数不符。')
 			return render_template('add_train.html', C_USER=session['C_USER'], P=session['P'], train_id_v=train_id, train_type_v=train_type, station_num_v=station_num, seat_num_v=seat_num, station_name_v=station_name, price_v=price, hour_v=hour, minute_v=minute, travel_time_v=travel_time, stop_over_time_v=stop_over_time, sale_month1_v=sale_month1, sale_month2_v= sale_month2, sale_date1_v=sale_date1, sale_date2_v=sale_date2)
 		if not check_num(stop_over_time, int(station_num) - 2, 10000):
 			flash('Invalid input: stop over time.')
@@ -271,9 +283,6 @@ def add_user():
 		if name_ == '!':
 			flash('Invalid name. 姓名由二至五个汉字组成。')
 			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
-		if priviledge >= session['P']:
-			flash('无权限。你只能添加比自己权限更低的用户。')
-			return render_template('add user.html', C_USER=session['C_USER'], P=session['P'], username_v=username, password_v=password, name_v=name, email_v=email, priviledge_v=priviledge)
 		username_str = get_result("add_user -c {} -u {} -p {} -n {} -m {} -g {}".format(session['C_USER'], username, password, name, email, priviledge))
 		if username_str == '-1':
 			flash('Fail. 用户'+ username +'已存在。')
@@ -318,10 +327,6 @@ def query_user():
 		username_ = id_check_valid(username)
 		if username_ == '!':
 			flash('Invalid input: "'+ username +'". (A valid username should be a string with an initial letter and made up of letter(s), number(s) or underline(s).)')
-			return render_template('query_user.html', C_USER=session['C_USER'], P=session['P'], user_=user_, q_user_display=q_user_display, q_user_value=username)
-		user_file = get_result("query_profile -c {} -u {}".format(username, username))
-		if user_file != '-1' and user_file.split(' ')[4] > session['P']:
-			flash('无权限。你只能添加比自己权限更低的用户。')
 			return render_template('query_user.html', C_USER=session['C_USER'], P=session['P'], user_=user_, q_user_display=q_user_display, q_user_value=username)
 		user_str = get_result("query_profile -c {} -u {}".format(session['C_USER'], username))
 		if user_str == '-1':
@@ -431,14 +436,12 @@ def buy():
 			train_id = request.form.get('train_id')
 			from_ = request.form.get('from')
 			to_= request.form.get('to')
-			date_max = request.form.get('d_max')
-			date_max = date_max.split('-')
 			date_min = request.form.get('d_min')
 			date_min = date_min.split('-')
-			m_max = int(date_max[0])
 			m_min = int(date_min[0])
+			d_min = int(date_min[1])
 			number_v = month_v = date_v = account_v = ''
-			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=train_id ,month_v=month_v,date_v=date_v,account_v=account_v,from_v=from_,to_v=to_,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
+			return render_template('buy.html', C_USER=session['C_USER'], P=session['P'], number_v=number_v, id_v=train_id ,month_v=m_min,date_v=d_min,account_v=account_v,from_v=from_,to_v=to_,m_max = m_max, m_min = m_min,d_max = d_max,d_min = d_min,s_max = s_max)
 		id_ = request.form.get('id')
 		from_ = request.form.get('from')
 		to = request.form.get('to')

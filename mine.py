@@ -95,7 +95,7 @@ def check_num(input, x, y):
         return 1
     inputs = input.split('|')
     if len(inputs) != x:
-        return 0
+        return 2
     for i in inputs:
         if int(i) > y:
             return 0
@@ -104,7 +104,7 @@ def check_num(input, x, y):
 def check_station_name(input, x):
     inputs = input.split('|')
     if len(inputs) != x:
-        return 0
+        return 2
     for i in inputs:
         if len(i) > 10:
             return 0

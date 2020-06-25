@@ -31,28 +31,28 @@
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Password</label>
                         <div class="col-sm-9">
-                          <input type="text" name="password" id="password" required='required' value="{{user_.password}}" class="form-control">
+                          <input type="text" name="password" id="password" required='required' value="{{user_.password}}" autocomplete="off" class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Name</label>
                         <div class="col-sm-9">
-                          <input type="text" name="name" id="name" required='required' value="{{user_.name}}" class="form-control">
+                          <input type="text" name="name" id="name" required='required' value="{{user_.name}}" autocomplete="off" class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Mail Address</label>
                         <div class="col-sm-9">
-                          <input type="text" id="email" name="email" required='required' value="{{user_.mail}}" class="form-control">
+                          <input type="text" id="email" name="email" required='required' value="{{user_.mail}}" autocomplete="off" class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Priviledge</label>
                         <div class="col-sm-9">
-                          <input type="number" name="priviledge" required='required' value="{{user_.p_}}" min="1" max="10" class="form-control">
+                          <input type="number" name="priviledge" required='required' value="{{user_.p_}}" autocomplete="off" min="1" max="10" class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
@@ -149,7 +149,7 @@
                     <form method="post" class="form-inline">
                       <div class="form-group">
                         <label for="inlineFormInput" class="sr-only">Name</label>
-                        <input id="inlineFormInput" value="{{q_user_value}}" name="username" required='required' type="text" placeholder="Username" class="mr-sm-3 form-control">
+                        <input id="inlineFormInput" value="{{q_user_value}}" name="username" required='required' type="text" autocomplete="off" placeholder="Username" class="mr-sm-3 form-control">
                       </div>
                       <div class="form-group">
                         <input type="submit" value="Query" class="btn btn-primary">

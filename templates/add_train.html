@@ -93,53 +93,53 @@
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">Train ID</label>
                         <div class="col-sm-10">
-                          <input type="text"  required="required" name="train_id" value="{{train_id_v}}" id="id" class="form-control"><small class="help-block-none">车次的唯一标识符，由字母开头，字母、数字和下划线组成的字符串，长度不超过20。</small>
+                          <input type="text" autocomplete="off"  required="required" name="train_id" value="{{train_id_v}}" id="id" class="form-control"><small class="help-block-none">车次的唯一标识符，由字母开头，字母、数字和下划线组成的字符串，长度不超过20。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">Train type</label>
                         <div class="col-sm-10">
-                          <input type="text"  required="required" name="train_type" value="{{train_type_v}}" id="type" class="form-control"><small class="help-block-none">车次种类，用一个大写字母表示。</small>
+                          <input type="text" autocomplete="off"  required="required" name="train_type" value="{{train_type_v}}" id="type" class="form-control"><small class="help-block-none">车次种类，用一个大写字母表示。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">座位数</label>
                         <div class="col-sm-10">
-                          <input type="number"  required="required" name="seat_num" value="{{seat_num_v}}" min="1" max="100000" class="form-control"><small class="help-block-none">该车次的座位数，为不超过100000的整数。</small>
+                          <input type="number" autocomplete="off"  required="required" name="seat_num" value="{{seat_num_v}}" min="1" max="100000" class="form-control"><small class="help-block-none">该车次的座位数，为不超过100000的整数。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">站数</label>
                         <div class="col-sm-10">
-                          <input type="number"  required="required" name="station_num" value="{{station_num_v}}" min="2" max="100" class="form-control"><small class="help-block-none">车次经过的车站数量（包括首发站与终点站），为大于1且不超过100的整数。</small>
+                          <input type="number" autocomplete="off"  required="required" name="station_num" value="{{station_num_v}}" min="2" max="100" class="form-control"><small class="help-block-none">车次经过的车站数量（包括首发站与终点站），为大于1且不超过100的整数。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">站名</label>
                         <div class="col-sm-10">
-                          <input type="text"  required="required" name="station_name" value="{{station_name_v}}" id="station_name" class="form-control"><small class="help-block-none">输入该车次经过的所有站名（包括首发站与终点站），每个站名由不超过十个汉字组成，站名之间用符号“|”隔开。</small>
+                          <input type="text" autocomplete="off"  required="required" name="station_name" value="{{station_name_v}}" id="station_name" class="form-control"><small class="help-block-none">输入该车次经过的所有站名（包括首发站与终点站），每个站名由不超过十个汉字组成，站名之间用符号“|”隔开。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">票价</label>
                         <div class="col-sm-10">
-                          <input type="text"  required="required" name="price" value="{{price_v}}" class="form-control" id="price"><small class="help-block-none">输入每相邻两站之间的票价，用符号“|”隔开。每相邻两战的票价为不超过100000的整数。(eg. 45 | 21 | 7).</small>
+                          <input type="text" autocomplete="off"  required="required" name="price" value="{{price_v}}" class="form-control" id="price"><small class="help-block-none">输入每相邻两站之间的票价，用符号“|”隔开。每相邻两战的票价为不超过100000的整数。(eg. 45 | 21 | 7).</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">发车时间</label>
                         <div class="col-sm-3">
-                          <input class="form-control"  required="required" name="hour" value="{{hour_v}}" type="number" min="0" max="23" >
+                          <input class="form-control" autocomplete="off"  required="required" name="hour" value="{{hour_v}}" type="number" min="0" max="23" >
                         </div>
                         <div>:</div>
                         <div class="col-sm-3">
-                          <input type="number"  required="required" name="minute" value="{{minute_v}}" min="0" max="59" class="form-control">
+                          <input type="number" autocomplete="off"  required="required" name="minute" value="{{minute_v}}" min="0" max="59" class="form-control">
                         </div>
                         <small class="help-block-none" style="margin-left: 17.6%; padding:5px">在售卖时间内，该车次每日的发车时间。</small>
                       </div>
@@ -147,33 +147,33 @@
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">行车时间</label>
                         <div class="col-sm-10">
-                          <input type="text"  required="required" name="travel_time" value="{{travel_time_v}}" id="travel_time" class="form-control"><small class="help-block-none">每相邻两站之间行车所用时间（单位为分钟），每一项是一个不超过10000的整数，用符号“|”隔开。</small>
+                          <input type="text" autocomplete="off"  required="required" name="travel_time" value="{{travel_time_v}}" id="travel_time" class="form-control"><small class="help-block-none">每相邻两站之间行车所用时间（单位为分钟），每一项是一个不超过10000的整数，用符号“|”隔开。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">经停时间</label>
                         <div class="col-sm-10">
-                          <input type="text"  required="required" name="stop_over_time" value="{{stop_over_time_v}}" id="stop_over" class="form-control"><small class="help-block-none">除始发站和终点站之外，列车在每一站停留的时间（单位为分钟），每一项是一个不超过10000的整数，用符号“|”隔开。</small>
+                          <input type="text" autocomplete="off"  required="required" name="stop_over_time" value="{{stop_over_time_v}}" id="stop_over" class="form-control"><small class="help-block-none">除始发站和终点站之外，列车在每一站停留的时间（单位为分钟），每一项是一个不超过10000的整数，用符号“|”隔开。</small>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-2 form-control-label">售卖时间</label>
                         <div class="col-sm-2">
-                          <input type="number"  required="required" name="sale_month1" value="{{sale_month1_v}}" min="6" max="8" class="form-control">
+                          <input type="number" autocomplete="off"  required="required" name="sale_month1" value="{{sale_month1_v}}" min="6" max="8" class="form-control">
                         </div>
                         <div>-</div>
                         <div class="col-sm-2">
-                          <input type="number" required="required" name="sale_date1"  value="{{sale_date1_v}}" min="1" max="31" class="form-control">
+                          <input type="number" autocomplete="off" required="required" name="sale_date1"  value="{{sale_date1_v}}" min="1" max="31" class="form-control">
                         </div>
                         <div>至</div>
                         <div class="col-sm-2">
-                          <input type="number"  required="required" name="sale_month2" value="{{sale_month2_v}}" min="6" max="8" class="form-control">
+                          <input type="number" autocomplete="off"  required="required" name="sale_month2" value="{{sale_month2_v}}" min="6" max="8" class="form-control">
                         </div>
                         <div>-</div>
                         <div class="col-sm-2">
-                          <input type="number"  required="required" name="sale_date2" value="{{sale_date2_v}}" min="1" max="31" class="form-control">
+                          <input type="number" autocomplete="off"  required="required" name="sale_date2" value="{{sale_date2_v}}" min="1" max="31" class="form-control">
                         </div>
                         <small class="help-block-none" style="margin-left: 17.6%; padding:5px">车次的售卖时间区间（闭区间），在该区间内，每天都有相同的此车次。日期应为2020年6月至8月的某一天 (eg. 6-20 至 7-12)</small>
                       </div>

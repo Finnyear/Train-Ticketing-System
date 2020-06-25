@@ -94,22 +94,22 @@
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 25px;padding-right:  0px; padding-top: 5px;">from</div>
                             <div class="col-md-5" style="padding-left: 50px;padding-right:  5px;">
-                              <input required="required" name="from" type="text" value="{{from_v}}" placeholder="上海" id="from" class="form-control">
+                              <input required="required" autocomplete="off" name="from" type="text" value="{{from_v}}" placeholder="上海" id="from" class="form-control">
                             </div>
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">to</div>
                             <div class="col-md-5" style="padding-left: 5px;padding-right:  15px;">
-                              <input required="required" name="to" type="text" value="{{to_v}}" placeholder="北京" id="to" class="form-control">
+                              <input required="required" autocomplete="off" name="to" type="text" value="{{to_v}}" placeholder="北京" id="to" class="form-control">
                             </div>
                           </div>
                           <div class="line"></div>
                           <div class="form-group row">
                             <div class="col-md-1" style="padding-left: 25px;padding-right:  0px; padding-top: 5px;">Date</div>
                             <div class="col-md-5" style="padding-left: 50px;padding-right:  5px;">
-                              <input required="required" name="month" type="number" value="{{month_v}}" min = "6" max = "8" class="form-control">
+                              <input required="required" autocomplete="off" name="month" type="number" value="{{month_v}}" min = "6" max = "8" class="form-control">
                             </div>
                             <div class="col-md-1" style="padding-left: 15px;padding-right:  0px;padding-top: 5px">-</div>
                             <div class="col-md-5" style="padding-left: 5px;padding-right:  15px;">
-                              <input required="required" name="date" type="number" value="{{date_v}}" min = "1" max = "31" class="form-control">
+                              <input required="required" autocomplete="off" name="date" type="number" value="{{date_v}}" min = "1" max = "31" class="form-control">
                             </div>
                           </div>
                           <div class="line"></div>
@@ -170,7 +170,6 @@
                               <input style="display: none" name="from" value="{{ticket_.from_}}">
                               <input style="display: none" name="to" value="{{ticket_.to}}">
                               <input style="display: none" name="d_min" value="{{ticket_.from_date}}">
-                              <input style="display: none" name="d_max" value="{{ticket_.to_date}}">
                               <input style="display: none" name="s_max" value="{{ticket_.seats}}">
                               <input type="submit" name="buy" class="btn btn-primary" value="Buy">
                             </form>
