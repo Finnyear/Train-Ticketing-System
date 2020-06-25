@@ -164,11 +164,15 @@ def query_train():
 		if 'release' in request.form:
 			train_id = request.form.get('train_id')
 			get_result("release_train -i {}".format(train_id))
+			global released_num
+			released_num+=1
 			flash("Success")
 			return redirect(url_for('query_train'))
 		if 'delete' in request.form:
 			train_id = request.form.get('train_id')
 			get_result("delete_train -i {}".format(train_id))
+			global train_num
+			train_num-=1
 			flash("Success")
 			return redirect(url_for('query_train'))
 		train_id = request.form.get('train_id')
