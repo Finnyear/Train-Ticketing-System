@@ -4,7 +4,7 @@
 
 ## 一、模块划分图
 
-![avatar](/img/backend.png)
+![avatar](/img/work.png)
 
 ## 二、函数功能
 ### Users类
