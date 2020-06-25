@@ -97,133 +97,132 @@
 
 * 由于未登录，第一次进入网页会路由至tourist page
 
-![avatar](/img/tourist.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/add_train.png)
 
 * 刷新一下，页面上有关火车的图片会随机发生变化
 
-![avatar](/img/tourist2.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/tourist2.png)
 
 * 点击sidebar上的各种操作，系统会提示你“无权限访问”
 
-![avatar](/img/tourist_fail.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/tourist_fail.png)
 
 * 点击login，跳转至登陆界面
 
-![avatar](/img/login.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/login.png)
 
 * 点击Signup，跳转至注册界面
 
-![avatar](/img/register.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/register.png)
 
 * 若输入不合规范，会在表单上方通过flash进行提示
 
-![avatar](/img/register_invalid.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/register_invalid.png)
 
 * 若输入无误，且注册的Username尚未使用，则注册成功，跳转至登陆界面
 
-![avatar](/img/register_success.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/register_success.png)
 
 * 若Username已经存在，注册失败
 
-![avatar](/img/register_fail.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/register_fail.png)
 
 * 登录成功后进入主页，发现New User的数量加一
 
-![avatar](/img/index.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/index.png)
 
 
 ### 三、火车操作
 
 * 点击sidebar中的Train->添加，进入add_train页面
 
-![avatar](/img/add_train.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/add_train.png)
 
 * 按照提示输入火车信息，如果输入不合法，同样会通过flash进行提示
 
-![avatar](/img/add_train_invalid.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/add_train_invalid.png)
 
 * 点击sidebar中的Train->查询，进入query_train页面
 
-![avatar](/img/query_train.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_train.png)
 
 * 查询的火车如果尚未发布，可以在该页面快捷发布/删除
 
-![avatar](/img/query_train_result.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_train_result.png)
 
 * 发布火车操作的确认环节
 
-![avatar](/img/query_train_release_ing.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_train_release_ing.png)
  
 * 发布之后的火车状态显示为Released
 
-![avatar](/img/query_train_released.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_train_released.png)
 
 * 也可以通过点击sidebar中的Train->发布，进入release_train页面
 
-![avatar](/img/release.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/release.png)
 
 * 点击sidebar中的Train->删除，进入delete_train页面
 
-![avatar](/img/delete.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/delete.png)
 
 ### 四、用户操作
 
 * 点击sidebar中的User->添加新用户，进入add_user页面
 
-![avatar](/img/add_user.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/add_user.png)
 
 * 若输入不合规范，会在表单上方通过flash进行提示
 
-![avatar](/img/add_user_invalid.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/add_user_invalid.png)
 
 * 点击sidebar中的User->查询/修改，进入query_user页面
 
-![avatar](/img/query_user.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_user.png)
 
 * 若查询用户存在且权限不大于当前用户，成功查询，并可进行修改操作
 
-![avatar](/img/query_user_result.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_user_result.png)
 
 * 点击Modify，进入修改页面
 
-![avatar](/img/modify.png)
-
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/modify.png)
 ### 五、票务操作
 
 * 点击sidebar中的Tickets->票务查询，进入query_tickets页面
 
-![avatar](/img/query_ticket.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_ticket.png)
 
 * 可以通过'time','cost','transfer one and only'三种不同的优先方式输出结果，若有符合查询请求的火车票，可直接进行购买
  
-![avatar](/img/query_ticket_result.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_ticket_result.png)
 
 * 点击Buy，跳转至buy_tickets页面，车站名和日期会自动填充（也可以通过点击sidebar中的Tickets->买票，自主进入buy_tickets页面）
 
-![avatar](/img/query_to_buy.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/query_to_buy.png)
 
 * 根据候补意愿的选择和车辆情况提示购买结果
 
-![avatar](/img/buy_success.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/buy_success.png)
 
 ### 六、其他操作
 
 * 点击sidebar中的My Order，进入我的订单，可进行退票操作
 
-![avatar](/img/my_order.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/my_order.png)
 
 * 退票成功后的订单显示为Refunded
 
-![avatar](/img/my_order_refunded.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/my_order_refunded.png)
 
 * 点击sidebar中的Clear，进入清库界面
 
-![avatar](/img/clear_all.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/clear_all.png)
 
 * 点击Clear all data，系统会向用户再三确认
 
-![avatar](/img/clear_warning.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/clear_warning.png)
 
 * 确认清空后，重新回到tourist page，所有数据清除
 
-![avatar](/img/clear.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/clear.png)
