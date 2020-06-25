@@ -4,7 +4,7 @@
 
 ## 一、模块划分图
 
-![avatar](/img/work.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/work.png)
 
 ## 二、函数功能
 ### Users类
@@ -97,7 +97,7 @@
 
 * 由于未登录，第一次进入网页会路由至tourist page
 
-![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/add_train.png)
+![avatar](https://raw.githubusercontent.com/ixxxMrAnderson/TrainTickets/master/img/tourist.png)
 
 * 刷新一下，页面上有关火车的图片会随机发生变化
 
