@@ -1,4 +1,4 @@
-# Train_Ticket_System
+# TTS: Train Ticket System
 
 # 《开发文档》
 
